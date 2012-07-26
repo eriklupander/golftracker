@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+   xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+        http://java.sun.com/xml/ns/persistence
+        http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+   <persistence-unit name="primary">
+      <!-- If you are running in a production environment, add a managed 
+         data source, the example data source is just for proofs of concept! -->
+      <jta-data-source>java:jboss/datasources/golftrackerMySQLDS</jta-data-source>
+     <jar-file>golftracker-common.jar</jar-file>
+     
+     <class>com.squeed.golftracker.common.model.Club</class>     
+     <class>com.squeed.golftracker.common.model.ClubSet</class>
+     <class>com.squeed.golftracker.common.model.Country</class>
+     <class>com.squeed.golftracker.common.model.Course</class>
+     <class>com.squeed.golftracker.common.model.Game</class>
+     <class>com.squeed.golftracker.common.model.GolfVenue</class>
+     <class>com.squeed.golftracker.common.model.Hole</class>
+     <class>com.squeed.golftracker.common.model.HoleScore</class>
+     <class>com.squeed.golftracker.common.model.Manufacturer</class>
+     <class>com.squeed.golftracker.common.model.PointOfInterest</class>
+     <class>com.squeed.golftracker.common.model.PoiType</class>
+     <class>com.squeed.golftracker.common.model.Setting</class>
+     <class>com.squeed.golftracker.common.model.Tee</class>
+     <class>com.squeed.golftracker.common.model.TeeType</class>
+     <class>com.squeed.golftracker.common.model.User</class>
+     
+      <properties>
+         <!-- Properties for Hibernate -->
+          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+         <property name="hibernate.show_sql" value="false" />
+         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+
+      </properties>
+   </persistence-unit>
+</persistence>

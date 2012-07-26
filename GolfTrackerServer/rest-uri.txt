@@ -1,0 +1,13 @@
+## REST URL:s ##
+
+-- getCourse
+http://localhost:8080/golftracker-server/rest/course/111
+
+-- getGolfVenue
+http://localhost:8080/golftracker-server/rest/course/venue/110
+
+--findVenueByName
+http://localhost:8080/golftracker-server/rest/course/name/S
+
+--nearby
+http://localhost:8080/golftracker-server/rest/course/nearby?lon=123&lat=345

@@ -1,0 +1,14 @@
+## HOWTO CREATE EMPTY MYSQL DATABASE ##
+
+mysqladmin -u root -p create golftracker
+(log in as root)
+
+mysql -u root -p
+(log in as root)
+
+GRANT usage ON *.* TO golftracker@localhost IDENTIFIED BY 'golftracker';
+
+GRANT ALL PRIVILEGES ON golftracker.* TO golftracker@localhost;
+
+
+See: http://dev.mysql.com/tech-resources/articles/mysql_intro.html#SECTION0003000000
