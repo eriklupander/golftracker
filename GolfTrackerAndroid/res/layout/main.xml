@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/LinearLayout1"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/background_01p">
+	<TextView android:layout_alignParentLeft="true"
+		android:layout_below="@+id/TextView1" android:id="@+id/textView1"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_alignParentRight="true" android:text="@string/welcomeLbl"
+		android:gravity="center_horizontal" android:layout_marginTop="40px"></TextView>
+	<Button android:id="@+id/StartButton1" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_below="@+id/textView1" android:layout_alignParentLeft="true"
+		android:layout_marginTop="40dp" android:layout_alignParentRight="true"
+		android:text="@string/playLbl"></Button>
+	<Button android:id="@+id/editCourseBtn" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_below="@+id/StartButton1"
+		android:layout_alignParentLeft="true" android:layout_marginTop="17dp"
+		android:layout_alignParentRight="true" android:text="@string/coursesLbl"></Button>
+	<Button android:id="@+id/registerUserButton1"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_centerVertical="true" android:layout_alignParentRight="true"
+		android:layout_alignParentLeft="true" android:text="@string/registerUserAccountLbl"
+		android:textAppearance="?android:attr/textAppearanceLarge"></Button>
+	<Button android:id="@+id/settingsBtn" android:layout_width="wrap_content"
+		android:text="@string/settings" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_below="@+id/registerUserButton1"
+		android:layout_alignParentLeft="true" android:layout_marginTop="18dp"
+		android:layout_alignParentRight="true"></Button>
+	<Button android:id="@+id/ExitBtn1" android:layout_width="wrap_content"
+		android:text="@string/exitLbl" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_below="@+id/settingsBtn"
+		android:layout_alignParentLeft="true" android:layout_marginTop="16dp"
+		android:layout_alignParentRight="true"></Button>
+	<TextView android:layout_width="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:text="" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true" android:layout_marginBottom="16dp"
+		android:id="@+id/loggedInAsLbl"></TextView>
+</RelativeLayout>

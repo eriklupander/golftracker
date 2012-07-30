@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:background="@drawable/background_01p">
+	<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+		android:id="@+id/textView1" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignParentTop="true"
+		android:layout_alignParentLeft="true" android:layout_marginTop="79dp"
+		android:layout_marginLeft="4dp" android:text="@string/clubLbl"></TextView>
+	<com.squeed.ui.CustomSpinnerView
+		android:layout_height="wrap_content" android:layout_below="@+id/textView1"
+		android:layout_alignParentLeft="true" android:layout_width="200dp"
+		android:layout_marginLeft="4dp" android:id="@+id/clubSpinnr"
+		android:layout_toLeftOf="@+id/fwSpinner"></com.squeed.ui.CustomSpinnerView>
+	<Button android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignParentBottom="true"
+		android:layout_centerHorizontal="true" android:layout_marginBottom="14dp"
+		android:id="@+id/nextBtn" android:text="@string/saveLbl"></Button>
+	<TextView android:textAppearance="?android:attr/textAppearanceLarge"
+		android:id="@+id/textView3" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignParentTop="true"
+		android:layout_centerHorizontal="true" android:layout_marginTop="21dp"
+		android:text="@string/enterScoreLbl"></TextView>
+	<com.squeed.ui.CustomSpinnerView
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/clubSpinnr" android:layout_alignLeft="@+id/textView3"
+		android:id="@+id/fwSpinner" android:layout_alignRight="@+id/nextBtn"></com.squeed.ui.CustomSpinnerView>
+	<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+		android:id="@+id/textView2" android:layout_width="wrap_content"
+		android:text="@string/fairwayLblShort" android:layout_height="wrap_content"
+		android:layout_above="@+id/fwSpinner" android:layout_alignLeft="@+id/fwSpinner"></TextView>
+	<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+		android:id="@+id/textView4" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignBottom="@+id/textView2"
+		android:layout_toRightOf="@+id/fwSpinner" android:text="@string/sandLbl"></TextView>
+	<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+		android:id="@+id/textView5" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignBaseline="@+id/textView4"
+		android:layout_alignBottom="@+id/textView4"
+		android:layout_alignParentRight="true" android:text="@string/penaltyLbl"></TextView>
+	<com.squeed.ui.CustomSpinnerView
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/fwSpinner" android:layout_toRightOf="@+id/fwSpinner"
+		android:layout_alignRight="@+id/textView4" android:id="@+id/bunkerShotsSpinner"></com.squeed.ui.CustomSpinnerView>
+	<com.squeed.ui.CustomSpinnerView
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/bunkerShotsSpinner"
+		android:layout_alignParentRight="true" android:id="@+id/penaltySpinner"
+		android:layout_toRightOf="@+id/bunkerShotsSpinner"></com.squeed.ui.CustomSpinnerView>
+
+</RelativeLayout>

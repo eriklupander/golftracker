@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="wrap_content" android:layout_height="wrap_content"
+	android:orientation="vertical" android:background="@drawable/background_01p">
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:id="@+id/top_control_bar2">
+		<TextView android:textAppearance="?android:attr/textAppearanceMedium"
+			android:layout_width="wrap_content" android:id="@+id/textView1"
+			android:layout_height="wrap_content" android:text="@string/selectCourseLbl"
+			android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+			android:layout_marginLeft="4dip"></TextView>
+		<EditText android:layout_height="wrap_content"
+			android:layout_width="wrap_content" android:layout_below="@id/textView1"
+			android:layout_alignParentRight="true" android:drawableRight="@drawable/ic_btn_search"
+			android:layout_alignParentLeft="true" android:id="@+id/searchEditCourseFld">
+			<requestFocus></requestFocus>
+		</EditText>
+	</RelativeLayout>
+	<LinearLayout android:id="@+id/bottom_control_bar2"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true">
+		<Button android:layout_height="wrap_content" android:layout_width="match_parent" android:id="@+id/registerNewCourseBtn" android:text="@string/registerNewCourse" android:drawableLeft="@drawable/create_contact"></Button>
+	</LinearLayout>
+	<ListView android:id="@android:id/list" android:layout_width="fill_parent"
+		android:cacheColorHint="#00000000" android:layout_height="0dip"
+		android:layout_below="@id/top_control_bar2" android:layout_above="@id/bottom_control_bar2"></ListView>
+	<TextView android:id="@+id/empty2" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_below="@id/top_control_bar2"
+		android:layout_above="@id/bottom_control_bar2" />
+</RelativeLayout>

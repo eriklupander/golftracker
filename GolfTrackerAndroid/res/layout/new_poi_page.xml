@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="match_parent"
+	android:layout_height="match_parent" android:background="@drawable/background_01p">
+	<TextView android:id="@+id/textView2" android:layout_width="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_height="wrap_content" android:layout_below="@+id/textView1"
+		android:layout_alignParentLeft="true" android:text="@string/latLbl"
+		android:textSize="7pt"></TextView>
+	<Button android:id="@+id/button2" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignTop="@+id/button1"
+		android:layout_toRightOf="@+id/button1" android:height="48dip"
+		android:width="48dip" android:layout_marginLeft="17dp"
+		android:background="@drawable/red_tee_icon"></Button>
+	<Button android:id="@+id/button3" android:layout_width="wrap_content"
+		android:layout_height="wrap_content" android:layout_alignTop="@+id/button2"
+		android:layout_toRightOf="@+id/button2" android:height="48dip"
+		android:width="48dip" android:layout_marginLeft="20dp"
+		android:background="@drawable/green_icon"></Button>
+	<Button android:id="@+id/button4" android:layout_width="wrap_content"
+		android:height="48dip" android:background="@drawable/bunker_icon"
+		android:width="48dip" android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/button3" android:layout_toRightOf="@+id/button3"
+		android:layout_marginLeft="19dp"></Button>
+	<Button android:id="@+id/Button01" android:layout_width="wrap_content"
+		android:height="48dip" android:width="48dip" android:layout_height="wrap_content"
+		android:layout_alignTop="@+id/button4"
+		android:layout_alignParentRight="true" android:background="@drawable/ic_menu_compass" 
+		></Button>
+	<Button android:id="@+id/button1" android:layout_width="wrap_content"
+		android:height="48dip" android:background="@drawable/yel_tee_icon"
+		android:width="48dip" android:layout_height="wrap_content"
+		android:layout_below="@+id/textView3" android:layout_alignParentLeft="true"
+		android:layout_marginTop="15dp"></Button>
+	<TextView android:id="@+id/textView4" android:layout_width="wrap_content"
+		android:text="@string/yellowTeeLbl" android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_height="wrap_content" android:layout_below="@+id/button1"
+		android:layout_alignRight="@+id/button1"></TextView>
+	<TextView android:id="@+id/textView5" android:layout_width="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_height="wrap_content" android:layout_alignTop="@+id/textView4"
+		android:layout_alignLeft="@+id/button2" android:text="@string/redTeeLbl"></TextView>
+	<TextView android:id="@+id/textView6" android:layout_width="wrap_content"
+		android:text="@string/greenLbl" android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_height="wrap_content" android:layout_alignTop="@+id/textView5"
+		android:layout_alignLeft="@+id/button3"></TextView>
+	<TextView android:id="@+id/textView7" android:layout_width="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_height="wrap_content" android:layout_alignTop="@+id/textView6"
+		android:layout_alignLeft="@+id/button4" android:text="@string/bunkerLbl"></TextView>
+	<TextView android:id="@+id/textView8" android:layout_width="wrap_content"
+		android:text="@string/otherLbl" android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_height="wrap_content" android:layout_below="@+id/Button01"
+		android:layout_alignLeft="@+id/Button01"></TextView>
+	<RadioGroup android:id="@+id/greenPointRadioGrp"
+		android:layout_width="wrap_content" android:layout_height="wrap_content"
+		android:layout_below="@+id/textView5" android:layout_centerHorizontal="true"
+		android:layout_marginTop="24dp" android:visibility="gone">
+		<RadioButton android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:checked="true"
+			android:id="@+id/radio0" android:text="@string/frontGreenLbl"
+			android:tag="fg"></RadioButton>
+		<RadioButton android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/radio1"
+			android:text="@string/midGreenLbl"
+			android:tag="mg"></RadioButton>
+		<RadioButton android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:id="@+id/radio2"
+			android:text="@string/backGreenLbl"
+			android:tag="bg"></RadioButton>
+	</RadioGroup>
+	<Button android:layout_width="wrap_content"
+		android:text="@string/saveLbl" android:layout_height="wrap_content"
+		android:layout_alignParentBottom="true" android:layout_alignRight="@+id/textView8"
+		android:layout_marginBottom="14dp" android:drawableLeft="@drawable/create_contact" android:id="@+id/poiSaveBtn" android:visibility="invisible"></Button>
+	<TextView android:layout_width="wrap_content" android:id="@+id/longValue"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_height="wrap_content" android:text="@string/dashes"
+		android:layout_above="@+id/textView2" android:textSize="7pt" android:layout_toLeftOf="@+id/poiSaveBtn"></TextView>
+	<TextView android:layout_width="wrap_content" android:id="@+id/textView3"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_height="wrap_content" android:text="@string/typeOfPoiLbl"
+		android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
+		android:layout_marginTop="14dp"></TextView>
+	<TextView android:layout_width="wrap_content" android:id="@+id/latValue"
+		android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_height="wrap_content" android:textSize="7pt"
+		android:text="@string/dashes" android:layout_alignTop="@+id/textView2"
+		android:layout_alignLeft="@+id/longValue"></TextView>
+	<TextView android:layout_width="wrap_content" android:id="@+id/textView1" android:textAppearance="?android:attr/textAppearanceMedium" android:layout_height="wrap_content" android:textSize="7pt" android:text="@string/longLbl" android:layout_alignTop="@+id/poiSaveBtn" android:layout_alignParentLeft="true"></TextView>
+	<RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/textView4" android:layout_toRightOf="@+id/textView2" android:layout_marginTop="33dp" android:id="@+id/bunkerTypeRadioGrp" android:orientation="horizontal" android:checkedButton="-1" android:visibility="gone">
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/bunkerTypeFw" android:text="@string/fairwayBunkerLbl" android:checked="false"></RadioButton>
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/bunkerTypeGreen" android:text="@string/greenBunkerLbl"></RadioButton>
+	</RadioGroup>
+	<RadioGroup android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/bunkerTypeRadioGrp" android:layout_centerHorizontal="true" android:id="@+id/fwBunkerPosRadioGrp" android:visibility="gone">
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:text="@string/leftLbl" android:id="@+id/leftRadioBtn" android:tag="fbl"></RadioButton>
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/rightLbl" android:id="@+id/rightRadioBtn" android:tag="fbr"></RadioButton>
+	</RadioGroup>
+	<RadioGroup android:id="@+id/greenBunkerPosRadioGrp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/bunkerTypeRadioGrp" android:layout_centerHorizontal="true" android:visibility="gone">
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:id="@+id/leftRadioBtn2" android:text="@string/leftLbl" android:tag="gbl"></RadioButton>
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/rightRadioBtn2" android:text="@string/rightLbl" android:tag="gbr"></RadioButton>
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" android:id="@+id/frontRadioBtn" android:text="@string/frontLbl" android:tag="gbf"></RadioButton>
+		<RadioButton android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/backRadioBtn" android:text="@string/backLbl" android:tag="gbb"></RadioButton>
+	</RadioGroup>
+	<ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	android:layout_alignTop="@+id/textView1" android:layout_alignLeft="@+id/textView3" android:id="@+id/progressBar1"></ProgressBar>
+	<com.squeed.ui.CustomSpinnerView android:layout_width="wrap_content" android:id="@+id/customSpinnerView1" android:layout_height="wrap_content" android:layout_below="@+id/textView4" android:layout_alignLeft="@+id/textView4" android:layout_toLeftOf="@+id/textView5"></com.squeed.ui.CustomSpinnerView>
+
+</RelativeLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" android:title="@string/settings">
+		
+		<PreferenceCategory android:title="@string/mapsHeadingMarkers">
+				<CheckBoxPreference
+                        android:title="@string/frontBackGreenMarkers"
+                        android:defaultValue="false"
+                        android:key="frontBackGreenMarkersPref" android:summary="@string/frontBackGreenMarkersDesc"/>
+		
+			    <CheckBoxPreference
+                       android:title="@string/fwBunkerMarkers"
+                       android:defaultValue="false"
+                       android:key="fwBunkerMarkersPref" android:summary="@string/fwBunkerMarkersDesc"/> 
+                        
+                <CheckBoxPreference
+                        android:title="@string/greenBunkerMarkers"
+                        android:defaultValue="false"
+                        android:key="greenBunkerMarkersPref" android:summary="@string/greenBunkerMarkersDesc"/>
+                        
+                
+		</PreferenceCategory>
+
+        <PreferenceCategory android:title="@string/mapsHeadingDistances">
+        	
+                <CheckBoxPreference
+                        android:title="@string/teeToGreenLine"
+                        android:defaultValue="false"
+                        android:key="teeToGreenLinePref" android:summary="@string/teeToGreenLineDesc"/> 
+                        
+                <CheckBoxPreference
+                        android:title="@string/playerToGreenLine"
+                        android:defaultValue="false"
+                        android:key="playerToGreenLinePref" android:summary="@string/playerToGreenLineDesc"/>
+                        
+                <CheckBoxPreference
+                        android:title="@string/distanceToMidGreen"
+                        android:defaultValue="false"
+                        android:key="distanceToMidGreenPref" android:summary="@string/distanceToMidGreenDesc"/>
+                        
+                <CheckBoxPreference
+                        android:title="@string/distanceToGreenBunkers"
+                        android:defaultValue="false"
+                        android:key="distanceToGreenBunkersPref" android:summary="@string/distanceToGreenBunkersDesc"/>
+                
+                <CheckBoxPreference
+                        android:title="@string/distanceToFwBunkers"
+                        android:defaultValue="false"
+                        android:key="distanceToFwBunkersPref" android:summary="@string/distanceToFwBunkersDesc"/>
+                        <!-- 
+                <ListPreference
+                        android:key="competenceLevelPref"
+                        android:defaultValue="(3)"
+                        android:entries="@array/listArray"
+                        android:entryValues="@array/listValues" android:summary="@string/lowestCompLevelDesc" android:title="@string/lowestCompLevel"/>
+                         -->
+        	</PreferenceCategory>
+        
+          <!--  
+        <PreferenceCategory android:title="@string/serverHeading">
+        <EditTextPreference
+                android:name="@string/serverUrl"
+                android:summary="@string/serverUrlDesc"
+                android:defaultValue="http://"
+                android:title="@string/serverUrl"
+                android:key="serverUrlPref" />
+        
+        <EditTextPreference
+                android:name="@string/username"
+                android:defaultValue="eitgelr"
+                android:title="@string/username"
+                android:key="userNamePref" android:summary="@string/usernamnDesc"/>
+                
+        <EditTextPreference 
+                android:name="@string/password"
+                android:summary="@string/passwordDesc"
+                android:defaultValue=""
+                android:title="@string/password"
+                android:key="passwordPref" 
+                android:password="true" />
+              
+        <RingtonePreference
+                android:name="Ringtone Preference"
+                android:summary="Select a ringtone"
+                android:title="Ringtones"
+                android:key="ringtonePref" />
+        <PreferenceScreen
+                android:key="SecondPrefScreen"
+                android:title="Second PreferenceScreen"
+                android:summary="This is a second PreferenceScreen">
+                <EditTextPreference
+                        android:name="An other EditText Preference"
+                        android:summary="This is a preference in the second PreferenceScreen"
+                        android:title="Edit text"
+                        android:key="SecondEditTextPref" />
+        </PreferenceScreen>
+        
+        <Preference android:key="testServerPref" android:title="@string/testServerConnection" android:summary="@string/testServerConnectionDesc"/> -->
+    <PreferenceCategory android:title="@string/serverHeading">
+        <Preference android:key="dumpDbCsvPref" android:title="@string/dumpDbCsv" android:summary="@string/dumpDbCsvDesc"/>
+        <Preference android:key="readDbCsvPref" android:title="@string/readDbCsv" android:summary="@string/readDbCsvDesc"/>
+        <Preference android:key="syncDbPref" android:title="@string/syncDb" android:summary="@string/syncDbDesc"/>
+    </PreferenceCategory>
+     
+</PreferenceScreen>

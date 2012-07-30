@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+	<RelativeLayout android:id="@+id/EditPoiRowLayout"
+		android:layout_height="wrap_content" android:drawingCacheQuality="auto"
+		android:paddingLeft="10px" android:layout_width="fill_parent"
+		android:orientation="horizontal">
+		<ImageView android:layout_height="36dip"
+			android:layout_width="36dip" android:id="@+id/poi_icon"
+			android:layout_alignParentTop="true" android:layout_marginRight="16dp"></ImageView>
+		<TextView android:textStyle="bold" android:id="@+id/poi_name"
+			android:textSize="7pt" android:layout_width="wrap_content"
+			android:text="Name" android:textColor="#FFFFFF" android:maxHeight="100px"
+			android:layout_height="wrap_content" android:layout_centerVertical="true"
+			android:layout_alignParentRight="true" android:layout_toRightOf="@+id/poi_icon"
+			android:gravity="right"></TextView>
+
+	</RelativeLayout>
+
+
+</RelativeLayout>
