@@ -17,7 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squeed.golftracker.entity.MemberDTO;
+import com.squeed.golftracker.common.model.User;
 import com.squeed.golftracker.helper.UserAgent;
 import com.squeed.golftracker.rest.RestClient;
 
@@ -52,7 +52,7 @@ public class MenuActivity extends Activity {
 				new OnClickListener() {
 
 			public void onClick(View v) {
-				Intent intent = new Intent(MenuActivity.this, CourseListActivity.class);
+				Intent intent = new Intent(MenuActivity.this, VenueListActivity.class);
 				startActivity(intent);
 			}
 			
@@ -112,7 +112,7 @@ public class MenuActivity extends Activity {
 		UserAgent.OWNER_ID = ownerId;
 		if(UserAgent.OWNER_ID != -1L) {
 			RestClient rc = new RestClient();
-			MemberDTO memberDto = rc.getMemberDTO(UserAgent.OWNER_ID);
+			User memberDto = rc.getUser(UserAgent.OWNER_ID);
 			if(memberDto != null)
 				((TextView) findViewById(R.id.loggedInAsLbl)).setText(memberDto.getUsername());
 		}

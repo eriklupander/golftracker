@@ -2,7 +2,6 @@ package com.squeed.golftracker;
 
 import java.util.List;
 
-import com.squeed.golftracker.R;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -24,11 +23,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.squeed.golftracker.entity.CourseDTO;
+import com.squeed.golftracker.common.model.Course;
 import com.squeed.golftracker.helper.DbHelper;
 
 public class EditCourseListActivity extends ListActivity {
-	private List<CourseDTO> allCourses;
+	private List<Course> allCourses;
 	private ListView lv;
 	private String term;
 	
@@ -154,8 +153,8 @@ public class EditCourseListActivity extends ListActivity {
             }
             
             // Bind the data efficiently with the holder.
-            holder.id = ((CourseDTO) getItem(position)).getId();
-            holder.name.setText( ((CourseDTO) getItem(position)).getName());
+            holder.id = ((Course) getItem(position)).getId();
+            holder.name.setText( ((Course) getItem(position)).getName());
             holder.icon.setImageBitmap(mIcon1);
            
             convertView.setBackgroundColor(colors[position % colors.length]);

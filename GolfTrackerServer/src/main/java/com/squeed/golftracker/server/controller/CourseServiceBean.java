@@ -68,4 +68,14 @@ public class CourseServiceBean implements CourseService {
 		return tc;
 	}
 
+	@Override
+	public List<Course> getCoursesOfVenue(Long venueId) {
+		GolfVenue gv = em.find(GolfVenue.class, venueId);
+		for(Course c : gv.getCourses()) {
+			c.getTees().size();
+			c.getHoles().size();
+		}
+		return gv.getCourses();
+	}
+
 }

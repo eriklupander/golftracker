@@ -4,7 +4,7 @@ import java.text.NumberFormat;
 
 import android.location.Location;
 
-import com.squeed.golftracker.entity.PointOfInterestDTO;
+import com.squeed.golftracker.common.model.PointOfInterest;
 
 public class LongLatConverter {
 
@@ -29,18 +29,18 @@ public class LongLatConverter {
 		return nf.format(getRawDistance(lon, lat, lon2, lat2));
 	}
 
-	public static String getDistance(Location location, PointOfInterestDTO poi) {
+	public static String getDistance(Location location, PointOfInterest poi) {
 		if(poi == null)
 			return "Ingen data";
-		return nf.format(getRawDistance(location.getLongitude(), location.getLatitude(), poi.getLon(), poi.getLat()));
+		return nf.format(getRawDistance(location.getLongitude(), location.getLatitude(), poi.getLongitude(), poi.getLatitude()));
 	}
 	
 	public static boolean checkProximity(Location location,
-			PointOfInterestDTO poi, int proximityDistance) {
+			PointOfInterest poi, int proximityDistance) {
 		if(poi == null) {
 			return false;
 		}
-		return getRawDistance(location.getLongitude(), location.getLatitude(), poi.getLon(), poi.getLat()) <= proximityDistance;
+		return getRawDistance(location.getLongitude(), location.getLatitude(), poi.getLongitude(), poi.getLatitude()) <= proximityDistance;
 	}
 		
 }

@@ -2,7 +2,6 @@ package com.squeed.golftracker;
 
 import java.util.List;
 
-import com.squeed.golftracker.R;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,24 +18,25 @@ import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.squeed.golftracker.entity.CourseDTO;
+import com.squeed.golftracker.common.model.GolfVenue;
 import com.squeed.golftracker.helper.DbHelper;
+import com.squeed.golftracker.rest.RestClient;
 
 /**
- * Lets the user select the course to play.
+ * Lets the user select the venue (e.g. club) to play.
  * @author Erik
  *
  */
-public class CourseListActivity extends ListActivity {
+public class VenueListActivity extends ListActivity {
 
-	private List<CourseDTO> allCourses;
+	//private List<Course> allCourses;
+	List<GolfVenue> golfVenues;
 	private ListView lv;
 	private String term;
 	
@@ -45,7 +45,7 @@ public class CourseListActivity extends ListActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
-	  setContentView(R.layout.course_list_page);
+	  setContentView(R.layout.venue_list_page);
 	  
 	  EditText searchFld = ((EditText) findViewById(R.id.searchCourseFld));
 	  searchFld.setOnKeyListener(new OnKeyListener() {
@@ -65,21 +65,22 @@ public class CourseListActivity extends ListActivity {
 		}
 	});
 	  
-	  // Create a new course if the desired one doesn't exist.
-	  Button b = (Button) findViewById(R.id.newCourseBtn);
-		
-		b.setOnClickListener(
-				new OnClickListener() {
-
-			public void onClick(View v) {
-				Intent intent = new Intent(CourseListActivity.this, NewCourseActivity.class);
-				startActivity(intent);
-			}
-			
-		});
-	  
-	  dbHelper = new DbHelper(this);
-	  allCourses = dbHelper.loadCourses(dbHelper.getReadableDatabase(), term);
+//	  // Create a new course if the desired one doesn't exist.
+//	  Button b = (Button) findViewById(R.id.newCourseBtn);
+//		
+//		b.setOnClickListener(
+//				new OnClickListener() {
+//
+//			public void onClick(View v) {
+//				Intent intent = new Intent(VenueListActivity.this, SelectCourseActivity.class);
+//				startActivity(intent);
+//			}
+//			
+//		});
+	  RestClient rc = new RestClient();
+	  //dbHelper = new DbHelper(this);
+		golfVenues = rc.getGolfVenues(123d,123d);
+	  //allCourses = dbHelper.loadCourses(dbHelper.getReadableDatabase(), term);
 	  
 	  
 	 
@@ -100,8 +101,8 @@ public class CourseListActivity extends ListActivity {
 	private void search(View v) {
 		term = ((EditText) v).getText().toString();
 		Log.i("CourseListActivity", term);
-		allCourses = dbHelper.loadCourses(dbHelper.getReadableDatabase(), term);
-		CourseListActivity.this.setListAdapter(new EfficientAdapter(CourseListActivity.this));
+		golfVenues = new RestClient().getGolfVenues(123d, 123d);
+		VenueListActivity.this.setListAdapter(new EfficientAdapter(VenueListActivity.this));
 	}
 	
 	private int[] colors = new int[] { 0x00000000, 0x33000000 };
@@ -119,11 +120,11 @@ public class CourseListActivity extends ListActivity {
         }
         
         public int getCount() {
-            return allCourses.size();
+            return golfVenues.size();
         }
         
         public Object getItem(int position) {
-            return allCourses.get(position);
+            return golfVenues.get(position);
         }
        
         public long getItemId(int position) {
@@ -143,10 +144,10 @@ public class CourseListActivity extends ListActivity {
                 convertView.setOnClickListener(new OnClickListener() {
 
 					public void onClick(View v) {
-						Log.d("CourseListActivity", "Clicked on course!");
-						Long courseId = ((ViewHolder) v.getTag()).id;
-						Intent i = new Intent(CourseListActivity.this, SelectTeeActivity.class);
-						i.putExtra("courseId", courseId);
+						Log.d("VenueListActivity", "Clicked on venue!");
+						Long venueId = ((ViewHolder) v.getTag()).id;
+						Intent i = new Intent(VenueListActivity.this, SelectCourseActivity.class);
+						i.putExtra("venueId", venueId);
 						startActivity(i);
 					}
                 	
@@ -168,8 +169,8 @@ public class CourseListActivity extends ListActivity {
             }
             
             // Bind the data efficiently with the holder.
-            holder.id = ((CourseDTO) getItem(position)).getId();
-            holder.name.setText( ((CourseDTO) getItem(position)).getName());
+            holder.id = ((GolfVenue) getItem(position)).getId();
+            holder.name.setText( ((GolfVenue) getItem(position)).getName());
             holder.icon.setImageBitmap(mIcon1);
            
             convertView.setBackgroundColor(colors[position % colors.length]);
@@ -200,7 +201,7 @@ public class CourseListActivity extends ListActivity {
 			
 			break;
 		case 2:
-			CourseListActivity.this.finish();
+			VenueListActivity.this.finish();
 			break;
 		}
 		return true;

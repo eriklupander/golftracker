@@ -17,7 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squeed.golftracker.entity.PointOfInterestDTO;
+import com.squeed.golftracker.common.model.PointOfInterest;
 import com.squeed.golftracker.helper.DbHelper;
 import com.squeed.golftracker.helper.UserAgent;
 
@@ -227,7 +227,7 @@ public class NewPoiActivity extends Activity {
 	
 	private void savePoiAndFinish(String tag) {
 		Long id = dbHelper.createNewPoi(dbHelper.getWritableDatabase(), holeId, gpsLocation, tag, getTypeText(selectedTypeId, tag), UserAgent.OWNER_ID);
-		PointOfInterestDTO poi = new PointOfInterestDTO(id, tag, getTypeText(selectedTypeId, tag), gpsLocation.getLatitude(), gpsLocation.getLongitude());
+		PointOfInterest poi = new PointOfInterest(id, tag, getTypeText(selectedTypeId, tag), gpsLocation.getLatitude(), gpsLocation.getLongitude());
 		
 		Intent data = new Intent();
 		data.putExtra("poi", poi);

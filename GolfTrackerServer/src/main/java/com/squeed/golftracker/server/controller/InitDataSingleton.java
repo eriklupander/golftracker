@@ -1,8 +1,8 @@
 package com.squeed.golftracker.server.controller;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -140,7 +140,7 @@ public class InitDataSingleton {
 	}
 
 	private void addHoles(Course c) {
-		Set<Hole> holes = new HashSet<Hole>();
+		List<Hole> holes = new ArrayList<Hole>();
 		for(int a = 1 ; a < 19; a++) {
 			Hole h = new Hole();
 			h.setHcp(a);
@@ -155,7 +155,7 @@ public class InitDataSingleton {
 	}
 
 	private void addTeeTypes(Course c) {
-		Set<TeeType> tees = new HashSet<TeeType>();
+		List<TeeType> tees = new ArrayList<TeeType>();
 		TeeType yellow = new TeeType();
 		yellow.setName("Gul");
 		tees.add(yellow);

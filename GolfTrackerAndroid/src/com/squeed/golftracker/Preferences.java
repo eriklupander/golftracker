@@ -9,9 +9,6 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.squeed.golftracker.helper.DbExporter;
-import com.squeed.golftracker.helper.DbHelper;
-
 public class Preferences extends PreferenceActivity {
 	
 	boolean testModePreference;
@@ -57,11 +54,11 @@ public class Preferences extends PreferenceActivity {
                             Toast.makeText(getBaseContext(),
                                             "Skriver databas till SD-kort...",
                                             Toast.LENGTH_LONG).show();
-                            DbExporter ex = new DbExporter(new DbHelper(getApplicationContext()));
-                            String data = ex.dbToCsvString();
-                            ex.dataToSdCard(data, "database.csv");
+//                            DbExporter ex = new DbExporter(new DbHelper(getApplicationContext()));
+//                            String data = ex.dbToCsvString();
+//                            ex.dataToSdCard(data, "database.csv");
                             Toast.makeText(getBaseContext(),
-                                    "Klar!",
+                                    "Not implemented",
                                     Toast.LENGTH_LONG).show();
                             return true;
                     }

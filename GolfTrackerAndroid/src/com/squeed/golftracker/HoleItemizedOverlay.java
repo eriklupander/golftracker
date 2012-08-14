@@ -4,13 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.sax.StartElementListener;
 import android.util.Log;
-
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.ItemizedOverlay;
-import com.google.android.maps.MapView;
-import com.google.android.maps.OverlayItem;
 
 public class HoleItemizedOverlay extends ItemizedOverlay {
 	

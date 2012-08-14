@@ -13,15 +13,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-import com.squeed.golftracker.entity.CourseDTO;
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.PointOfInterestDTO;
+import com.squeed.golftracker.common.model.Course;
+import com.squeed.golftracker.common.model.Hole;
+import com.squeed.golftracker.common.model.PointOfInterest;
 
 public class EditHoleMapActivity extends MapActivity {
 	
@@ -38,15 +32,15 @@ public class EditHoleMapActivity extends MapActivity {
 	boolean showFwBunkerMarkers = true;
 	boolean showGreenBunkerMarkers = true;
 	
-	HoleDTO currentHole;
-	CourseDTO course;
+	Hole currentHole;
+	Course course;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_hole_map);
-		currentHole = (HoleDTO) getIntent().getSerializableExtra("hole");
-		course = (CourseDTO) getIntent().getSerializableExtra("course");
+		currentHole = (Hole) getIntent().getSerializableExtra("hole");
+		course = (Course) getIntent().getSerializableExtra("course");
 		init();
 	}
 
@@ -69,7 +63,7 @@ public class EditHoleMapActivity extends MapActivity {
 					Toast.makeText(EditHoleMapActivity.this, "Du är på hål 1.", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				currentHole = (HoleDTO) course.getHoles().get(currentHole.getNumber()-2);
+				currentHole = (Hole) course.getHoles().get(currentHole.getNumber()-2);
 				init();					
 			}
 		});
@@ -82,7 +76,7 @@ public class EditHoleMapActivity extends MapActivity {
 					Toast.makeText(EditHoleMapActivity.this, "Du är på hål " + course.getHoles().size() + ".", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				currentHole = (HoleDTO) course.getHoles().get(currentHole.getNumber());
+				currentHole = (Hole) course.getHoles().get(currentHole.getNumber());
 				init();			
 			}
 		});
@@ -105,8 +99,8 @@ public class EditHoleMapActivity extends MapActivity {
 		
 		//GeoPoint ytPoint = new GeoPoint((int) (yellowTee.getLat() * 1E6), (int) (yellowTee.getLon() * 1E6));
 		//mgPoint = new GeoPoint((int) (midGreen.getLat() * 1E6), (int) (midGreen.getLon() * 1E6));
-		PointOfInterestDTO yellowTee = (PointOfInterestDTO) currentHole.getYellowTee();
-		PointOfInterestDTO midGreen = (PointOfInterestDTO) currentHole.getMidGreen();
+		PointOfInterest yellowTee = (PointOfInterest) currentHole.getYellowTee();
+		PointOfInterest midGreen = (PointOfInterest) currentHole.getMidGreen();
 		
 		double centerLat, centerLon;
 		if(yellowTee != null && midGreen != null) {
@@ -144,7 +138,7 @@ public class EditHoleMapActivity extends MapActivity {
 		
 		
 		
-		for(PointOfInterestDTO p1 : currentHole.getPois()) {
+		for(PointOfInterest p1 : currentHole.getPois()) {
 			int latx = (int) (p1.getLat() * 1E6);
 			int lngx = (int) (p1.getLon() * 1E6);
 			
@@ -196,19 +190,19 @@ public class EditHoleMapActivity extends MapActivity {
 	
 	
 	
-	private boolean isGreenPoi(PointOfInterestDTO p1) {
+	private boolean isGreenPoi(PointOfInterest p1) {
 		return p1.getType().equals("fg") ||  p1.getType().equals("mg") ||p1.getType().equals("bg");
 	}
 	
-	private boolean isMidGreenPoi(PointOfInterestDTO p1) {
+	private boolean isMidGreenPoi(PointOfInterest p1) {
 		return p1.getType().equals("mg");
 	}
 
-	private boolean isFwBunkerPoi(PointOfInterestDTO p1) {
+	private boolean isFwBunkerPoi(PointOfInterest p1) {
 		return p1.getType().equals("fbr") ||  p1.getType().equals("fbl");
 	}
 
-	private boolean isGreenBunkerPoi(PointOfInterestDTO p1) {
+	private boolean isGreenBunkerPoi(PointOfInterest p1) {
 		return p1.getType().equals("gbf") ||  p1.getType().equals("gbl") || p1.getType().equals("gbr") ||  p1.getType().equals("gbb");
 	}
 	
@@ -233,14 +227,14 @@ public class EditHoleMapActivity extends MapActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		CourseDTO c = (CourseDTO) getIntent().getSerializableExtra("course");
+		Course c = (Course) getIntent().getSerializableExtra("course");
 		switch (item.getItemId()) {
 		case 1:
 			if(currentHole.getNumber()-2 < 0) {
 				Toast.makeText(EditHoleMapActivity.this, "Du är på hål 1.", Toast.LENGTH_SHORT).show();
 				return true;
 			}
-			currentHole = (HoleDTO) c.getHoles().get(currentHole.getNumber()-2);
+			currentHole = (Hole) c.getHoles().get(currentHole.getNumber()-2);
 			init();
 			break;
 		case 2:
@@ -248,7 +242,7 @@ public class EditHoleMapActivity extends MapActivity {
 				Toast.makeText(EditHoleMapActivity.this, "Du är på hål " + c.getHoles().size() + ".", Toast.LENGTH_SHORT).show();
 				return true;
 			}
-			currentHole = (HoleDTO) c.getHoles().get(currentHole.getNumber());
+			currentHole = (Hole) c.getHoles().get(currentHole.getNumber());
 			init();
 			break;
 		case 3:
@@ -297,7 +291,7 @@ public class EditHoleMapActivity extends MapActivity {
 	protected void onActivityResult(int reqCode, int resCode, Intent data) {
 		Log.i("EditHoleMapActivity", "ENTER - EditHoleMapActivity: " + reqCode + " / " + resCode);
 		if(reqCode == 777 && data != null && data.getSerializableExtra("poi") != null) {
-			PointOfInterestDTO poi = (PointOfInterestDTO) data.getSerializableExtra("poi");
+			PointOfInterest poi = (PointOfInterest) data.getSerializableExtra("poi");
 			currentHole.getPois().add(poi);
 			course.getHoles().remove(currentHole);
 			course.getHoles().add(currentHole);

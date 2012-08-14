@@ -23,22 +23,31 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squeed.golftracker.entity.CourseDTO;
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.PointOfInterestDTO;
-import com.squeed.golftracker.entity.RoundDTO;
-import com.squeed.golftracker.entity.TeeDTO;
+import com.squeed.golftracker.common.model.Course;
+import com.squeed.golftracker.common.model.Hole;
+import com.squeed.golftracker.common.model.PointOfInterest;
+import com.squeed.golftracker.common.model.Tee;
 import com.squeed.golftracker.helper.DbHelper;
 import com.squeed.golftracker.helper.LongLatConverter;
 
+/**
+ * TODO Actually describe this activity. It is the main activity when playing
+ * golf after all.
+ * 
+ * Also, we should add some kind of "Game" or "GameSession" class
+ * to keep track of player(s), their Tee(s) and score.
+ * 
+ * @author Erik
+ *
+ */
 public class GolfTrackerActivity extends Activity {
 
 	private LocationManager locMgr;
 	private SQLiteDatabase readableDatabase;
 	
-	private CourseDTO course;
-	private HoleDTO currentHole;
-	private TeeDTO tee;
+	private Course course;
+	private Hole currentHole;
+	private Tee tee;
 	
 	private Animation inAnimation;
 
@@ -62,7 +71,7 @@ public class GolfTrackerActivity extends Activity {
 		
 		// Set selected tee.
 		Long teeId = getIntent().getLongExtra("teeId", -1L);
-		for(TeeDTO t : course.getTees()) {
+		for(Tee t : course.getTees()) {
 			if(t.getId().longValue() == teeId.longValue()) {
 				tee = t;
 				break;
@@ -94,7 +103,7 @@ public class GolfTrackerActivity extends Activity {
 			public void onClick(View v) {
 				Intent i = new Intent(GolfTrackerActivity.this, HoleScoreActivity.class);
 				i.putExtra("currentHole", currentHole);
-				i.putExtra("currentRound", new RoundDTO(1L, -1L, new Date(), 1L, 1L));
+				i.putExtra("currentRound", new Round(1L, -1L, new Date(), 1L, 1L));
 				startActivity(i);
 			}
 		});
@@ -237,7 +246,7 @@ public class GolfTrackerActivity extends Activity {
 			// TODO introduce a timer, for example 5 minutes after a switch,
 			// until we start to check for new hole
 			if(currentHoleNo+1 < course.getHoles().size()) {
-				PointOfInterestDTO nextTee = (PointOfInterestDTO) ((HoleDTO) course.getHoles().get(currentHoleNo+1))
+				PointOfInterest nextTee = (PointOfInterest) ((Hole) course.getHoles().get(currentHoleNo+1))
 						.getYellowTee();
 				if (LongLatConverter.checkProximity(location, nextTee, 10)) {
 					currentHoleNo++;
@@ -246,7 +255,7 @@ public class GolfTrackerActivity extends Activity {
 			}
 				
 			if (currentHole == null) {
-				currentHole = (HoleDTO) course.getHoles().get(currentHoleNo);
+				currentHole = (Hole) course.getHoles().get(currentHoleNo);
 			}
 
 			// Calculate and display the three default distances.
@@ -295,7 +304,7 @@ public class GolfTrackerActivity extends Activity {
 	}
 
 	private void changeHole() {
-		currentHole = (HoleDTO) course.getHoles()
+		currentHole = (Hole) course.getHoles()
 				.get(currentHoleNo);
 		//locMgr.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, null);
 		//onCourse = true;
@@ -320,7 +329,7 @@ public class GolfTrackerActivity extends Activity {
 		}
 	}
 	
-	private CharSequence buildTitleText(CourseDTO course, HoleDTO hole) {
+	private CharSequence buildTitleText(Course course, Hole hole) {
 		StringBuilder buf = new StringBuilder();
 		buf.append(course.getName());
 //		.append(" | Hål ")

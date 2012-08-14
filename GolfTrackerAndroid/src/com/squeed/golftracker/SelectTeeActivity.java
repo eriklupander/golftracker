@@ -13,14 +13,14 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.squeed.golftracker.entity.CourseDTO;
-import com.squeed.golftracker.entity.TeeDTO;
-import com.squeed.golftracker.helper.DbHelper;
+import com.squeed.golftracker.common.model.Course;
+import com.squeed.golftracker.common.model.Tee;
+import com.squeed.golftracker.rest.RestClient;
 
 public class SelectTeeActivity extends ListActivity {
 	
 	private long courseId;
-	private CourseDTO course;
+	private Course course;
 	private ListView lv;
 	
 	@Override
@@ -29,9 +29,9 @@ public class SelectTeeActivity extends ListActivity {
 	  setContentView(R.layout.poi_list_page);
 	  courseId = getIntent().getLongExtra("courseId", -1L);
 	  
-	  DbHelper dbHelper = new DbHelper(this);
+	 // DbHelper dbHelper = new DbHelper(this);
 	  
-	  course = dbHelper.loadCourseFromDb(dbHelper.getReadableDatabase(), courseId);
+	  course = new RestClient().getCourse(courseId); //dbHelper.loadCourseFromDb(dbHelper.getReadableDatabase(), courseId);
 	  
 	  lv = getListView();
 	  lv.setTextFilterEnabled(true);
@@ -104,8 +104,8 @@ public class SelectTeeActivity extends ListActivity {
             }
             
             // Bind the data efficiently with the holder.
-            holder.id = ((TeeDTO) getItem(position)).getId();
-            holder.name.setText( ((TeeDTO) getItem(position)).getName());
+            holder.id = ((Tee) getItem(position)).getId();
+            holder.name.setText( ((Tee) getItem(position)).getTeeType().getName());
             holder.distance.setText( "N/A");
            
             

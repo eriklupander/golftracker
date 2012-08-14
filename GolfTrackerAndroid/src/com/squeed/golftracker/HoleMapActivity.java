@@ -27,16 +27,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
-import com.google.android.maps.Overlay;
-import com.google.android.maps.OverlayItem;
-import com.google.android.maps.Projection;
-import com.squeed.golftracker.entity.CourseDTO;
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.PointOfInterestDTO;
+import com.squeed.golftracker.common.model.Course;
+import com.squeed.golftracker.common.model.Hole;
+import com.squeed.golftracker.common.model.PointOfInterest;
 
 public class HoleMapActivity extends MapActivity {
 	
@@ -58,8 +51,8 @@ public class HoleMapActivity extends MapActivity {
 	boolean showFwBunkerMarkers = false;
 	boolean showGreenBunkerMarkers = false;
 	
-	HoleDTO currentHole;
-	CourseDTO course;
+	Hole currentHole;
+	Course course;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,8 +60,8 @@ public class HoleMapActivity extends MapActivity {
 		setContentView(R.layout.hole_map);
 		nf = NumberFormat.getInstance();
 		nf.setMaximumFractionDigits(0);
-		currentHole = (HoleDTO) getIntent().getSerializableExtra("hole");
-		course = (CourseDTO) getIntent().getSerializableExtra("course");
+		currentHole = (Hole) getIntent().getSerializableExtra("hole");
+		course = (Course) getIntent().getSerializableExtra("course");
 		
 		((Button) findViewById(R.id.prevBtn)).setOnClickListener(new OnClickListener() {
 			
@@ -78,7 +71,7 @@ public class HoleMapActivity extends MapActivity {
 					Toast.makeText(HoleMapActivity.this, "Du är på hål 1.", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				currentHole = (HoleDTO) course.getHoles().get(currentHole.getNumber()-2);
+				currentHole = (Hole) course.getHoles().get(currentHole.getNumber()-2);
 				init();					
 			}
 		});
@@ -91,7 +84,7 @@ public class HoleMapActivity extends MapActivity {
 					Toast.makeText(HoleMapActivity.this, "Du är på hål " + course.getHoles().size() + ".", Toast.LENGTH_SHORT).show();
 					return;
 				}
-				currentHole = (HoleDTO) course.getHoles().get(currentHole.getNumber());
+				currentHole = (Hole) course.getHoles().get(currentHole.getNumber());
 				init();			
 			}
 		});
@@ -129,8 +122,8 @@ public class HoleMapActivity extends MapActivity {
 		i.putExtra("hole_number", currentHole.getNumber());
 		this.setResult(777, i);
 		
-		PointOfInterestDTO yellowTee = (PointOfInterestDTO) currentHole.getYellowTee();
-		PointOfInterestDTO midGreen = (PointOfInterestDTO) currentHole.getMidGreen();
+		PointOfInterest yellowTee = (PointOfInterest) currentHole.getYellowTee();
+		PointOfInterest midGreen = (PointOfInterest) currentHole.getMidGreen();
 		
 		addStaticOverlaysToHole(yellowTee, midGreen);
 		
@@ -139,8 +132,8 @@ public class HoleMapActivity extends MapActivity {
 				locationListener);
 	}
 
-	private void addStaticOverlaysToHole(PointOfInterestDTO yellowTee,
-			PointOfInterestDTO midGreen) {
+	private void addStaticOverlaysToHole(PointOfInterest yellowTee,
+			PointOfInterest midGreen) {
 		if(yellowTee == null || midGreen == null) {
 			Toast.makeText(HoleMapActivity.this, "Hål " + currentHole.getNumber() + " saknar GPS-koordinater för gul tee och mitten green, kan ej visa.", Toast.LENGTH_LONG).show();
 			return;
@@ -171,9 +164,9 @@ public class HoleMapActivity extends MapActivity {
 		
 				
 		
-		List<PointOfInterestDTO> pois = currentHole.getPois();
+		List<PointOfInterest> pois = currentHole.getPois();
 		
-		for(PointOfInterestDTO p1 : pois) {
+		for(PointOfInterest p1 : pois) {
 			int latx = (int) (p1.getLat() * 1E6);
 			int lngx = (int) (p1.getLon() * 1E6);
 			
@@ -249,7 +242,7 @@ public class HoleMapActivity extends MapActivity {
 			
 			// Print distances at POI:s?
 			
-			for(PointOfInterestDTO p1 : currentHole.getPois()) {
+			for(PointOfInterest p1 : currentHole.getPois()) {
 				int latx = (int) (p1.getLat() * 1E6);
 				int lngx = (int) (p1.getLon() * 1E6);
 				if(showDistancesToMidGreen && isGreenPoi(p1)) {
@@ -287,19 +280,19 @@ public class HoleMapActivity extends MapActivity {
 		public void onStatusChanged(String provider, int status, Bundle extras) {}
 	};
 	
-	private boolean isGreenPoi(PointOfInterestDTO p1) {
+	private boolean isGreenPoi(PointOfInterest p1) {
 		return p1.getType().equals("fg") ||  p1.getType().equals("mg") ||p1.getType().equals("bg");
 	}
 	
-	private boolean isMidGreenPoi(PointOfInterestDTO p1) {
+	private boolean isMidGreenPoi(PointOfInterest p1) {
 		return p1.getType().equals("mg");
 	}
 
-	private boolean isFwBunkerPoi(PointOfInterestDTO p1) {
+	private boolean isFwBunkerPoi(PointOfInterest p1) {
 		return p1.getType().equals("fwbr") ||  p1.getType().equals("fwbr");
 	}
 
-	private boolean isGreenBunkerPoi(PointOfInterestDTO p1) {
+	private boolean isGreenBunkerPoi(PointOfInterest p1) {
 		return p1.getType().equals("gbf") ||  p1.getType().equals("gbl") || p1.getType().equals("gbr") ||  p1.getType().equals("gbb");
 	}
 	
@@ -484,14 +477,14 @@ public class HoleMapActivity extends MapActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		CourseDTO c = (CourseDTO) getIntent().getSerializableExtra("course");
+		Course c = (Course) getIntent().getSerializableExtra("course");
 		switch (item.getItemId()) {
 		case 1:
 			if(currentHole.getNumber()-2 < 0) {
 				Toast.makeText(HoleMapActivity.this, "Du är på hål 1.", Toast.LENGTH_SHORT).show();
 				return true;
 			}
-			currentHole = (HoleDTO) c.getHoles().get(currentHole.getNumber()-2);
+			currentHole = (Hole) c.getHoles().get(currentHole.getNumber()-2);
 			init();
 			break;
 		case 2:
@@ -499,7 +492,7 @@ public class HoleMapActivity extends MapActivity {
 				Toast.makeText(HoleMapActivity.this, "Du är på hål " + c.getHoles().size() + ".", Toast.LENGTH_SHORT).show();
 				return true;
 			}
-			currentHole = (HoleDTO) c.getHoles().get(currentHole.getNumber());
+			currentHole = (Hole) c.getHoles().get(currentHole.getNumber());
 			init();
 			break;
 		}

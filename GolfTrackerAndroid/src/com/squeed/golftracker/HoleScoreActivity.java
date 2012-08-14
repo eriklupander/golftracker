@@ -14,10 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ViewSwitcher;
 
-import com.squeed.golftracker.entity.ClubDTO;
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.HoleScoreDTO;
-import com.squeed.golftracker.entity.RoundDTO;
+import com.squeed.golftracker.common.model.Club;
+import com.squeed.golftracker.common.model.Hole;
+import com.squeed.golftracker.common.model.HoleScore;
 import com.squeed.golftracker.helper.DbHelper;
 import com.squeed.golftracker.helper.StaticDataStore;
 import com.squeed.ui.CustomSpinnerView;
@@ -26,12 +25,12 @@ import com.squeed.ui.OnCustomSpinnerSelectListener;
 
 public class HoleScoreActivity extends Activity {
 	
-	private HoleDTO currentHole;
-	private RoundDTO currentRound;
+	private Hole currentHole;
+	private Round currentRound;
 	private int currentScore;
 	private ViewSwitcher switcher;
 	
-	private HoleScoreDTO dto;
+	private HoleScore dto;
 	
 	Bitmap[] icons;
 	
@@ -41,8 +40,8 @@ public class HoleScoreActivity extends Activity {
 		setContentView(R.layout.hole_score);
 		switcher = (ViewSwitcher) findViewById(R.id.scoreSwitcher);
 		
-		this.currentHole = (HoleDTO) getIntent().getSerializableExtra("currentHole");
-		this.currentRound = (RoundDTO) getIntent().getSerializableExtra("currentRound");
+		this.currentHole = (Hole) getIntent().getSerializableExtra("currentHole");
+		this.currentRound = (Round) getIntent().getSerializableExtra("currentRound");
 		this.currentScore = currentHole.getPar();
 		final DbHelper db = new DbHelper(this);
 		
@@ -61,8 +60,8 @@ public class HoleScoreActivity extends Activity {
 		icons[6] = BitmapFactory.decodeResource(getResources(), R.drawable.straight);
 		icons[7] = BitmapFactory.decodeResource(getResources(), R.drawable.fade);
 //		
-//		List<ClubDTO> clubs = db.getClubs(db.getReadableDatabase());
-//		for(ClubDTO c : clubs) {
+//		List<Club> clubs = db.getClubs(db.getReadableDatabase());
+//		for(Club c : clubs) {
 //			
 //			l.add(new MyListItem(c.getId(), c.getLongName(), null, icons[c.getIconId()]));
 //		}
@@ -93,7 +92,7 @@ public class HoleScoreActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				dto = new HoleScoreDTO(-1L, -1L, new Date(), currentHole.getId(),
+				dto = new HoleScore(-1L, -1L, new Date(), currentHole.getId(),
 						currentRound.getId(), resultSpinner.getSelectedItemId().intValue(), 
 						puttsSpinner.getSelectedItemId().intValue(), null, null, null, null, -1L);
 				Log.i("HoleScoreActivity", "Change view!");
@@ -101,9 +100,9 @@ public class HoleScoreActivity extends Activity {
 				
 				// Clubs...	
 				final CustomSpinnerView clubSpinner = (CustomSpinnerView) findViewById(R.id.clubSpinnr);
-				List<ClubDTO> clubs = db.getClubs(db.getReadableDatabase());
+				List<Club> clubs = db.getClubs(db.getReadableDatabase());
 				List<MyListItem> l = new ArrayList<MyListItem>();
-				for(ClubDTO c : clubs) {
+				for(Club c : clubs) {
 					
 					l.add(new MyListItem(c.getId(), c.getLongName(), null, icons[c.getIconId()]));
 				}

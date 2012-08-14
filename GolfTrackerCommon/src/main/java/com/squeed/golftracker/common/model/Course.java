@@ -1,5 +1,7 @@
 package com.squeed.golftracker.common.model;
 
+import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,15 +13,16 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="course")
-public class Course {
-	
+public class Course implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String name;
 	private String description;
 		
-	private Set<Hole> holes;
-	private Set<TeeType> tees;
+	private List<Hole> holes;
+	private List<TeeType> tees;
 	
 	@Id
 	@GeneratedValue
@@ -45,18 +48,18 @@ public class Course {
 	
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	public Set<Hole> getHoles() {
+	public List<Hole> getHoles() {
 		return holes;
 	}
-	public void setHoles(Set<Hole> holes) {
+	public void setHoles(List<Hole> holes) {
 		this.holes = holes;
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL)
-	public Set<TeeType> getTees() {
+	public List<TeeType> getTees() {
 		return tees;
 	}
-	public void setTees(Set<TeeType> tees) {
+	public void setTees(List<TeeType> tees) {
 		this.tees = tees;
 	}
 	

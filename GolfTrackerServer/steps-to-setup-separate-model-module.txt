@@ -1,0 +1,28 @@
+Some stuff to remember:
+1. In your maven pom in the module(s) that need the common stuff, add the dependency:
+
+<dependency>
+			<groupId>com.squeed.golftracker.common</groupId>
+			<artifactId>golftracker-common</artifactId>
+			<version>0.1</version>
+			<scope>compile</scope>
+</dependency>
+
+After running mvn eclipse:clean eclipse:eclipse and refreshing inside Eclipse, the entities now are available.
+
+2. Remember to run 
+
+mvn clean install 
+
+inside golftracker/GolfTrackerCommon
+
+3. You have to manually specify which jar-file and which classes to treat as JPA entities inside persistence.xml, e.g:
+
+<jar-file>golftracker-common.jar</jar-file>
+     
+     <class>com.squeed.golftracker.common.model.Club</class>     
+     <class>com.squeed.golftracker.common.model.ClubSet</class>
+     <class>com.squeed.golftracker.common.model.Country</class>
+     ...
+	 
+4. Well, that's about it. The actual golftracker-common.jar is placed inside WEB-INF/lib in the golftracker-server.war

@@ -14,8 +14,9 @@ public class PointOfInterest {
 	private Long id;
 	private PoiType type;
 	private String title;
-	private Long longitude;
-	private Long latitude;
+	private Double longitude;
+	private Double latitude;
+	private User createdBy;
 	
 	@Id
 	@GeneratedValue
@@ -39,17 +40,25 @@ public class PointOfInterest {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Long getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Long longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	public Long getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Long latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
+	}
+	
+	@ManyToOne(optional=true)
+	public User getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 }

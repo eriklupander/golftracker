@@ -6,10 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapController;
-import com.google.android.maps.MapView;
 import com.squeed.golftracker.helper.DbHelper;
 import com.squeed.golftracker.helper.FixedCoordinates;
 

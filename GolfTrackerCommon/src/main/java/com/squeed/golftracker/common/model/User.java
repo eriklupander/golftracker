@@ -30,6 +30,14 @@ public class User {
 	@ManyToOne
 	private ClubSet clubSet;
 	
+	public User() {}
+	
+	public User(Long userId, String username, String email, String name) {
+		this.id = userId;
+		this.username = username;
+		this.email = email;
+		this.name = name;
+	}
 	public Long getId() {
 		return id;
 	}

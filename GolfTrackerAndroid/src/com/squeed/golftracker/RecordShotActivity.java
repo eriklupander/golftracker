@@ -17,9 +17,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.squeed.golftracker.entity.ClubDTO;
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.ShotProfileDTO;
+import com.squeed.golftracker.common.model.Club;
+import com.squeed.golftracker.common.model.Hole;
 import com.squeed.golftracker.helper.DbHelper;
 import com.squeed.golftracker.helper.LongLatConverter;
 import com.squeed.ui.CustomSpinnerView;
@@ -31,10 +30,10 @@ public class RecordShotActivity extends Activity {
 	private double startLon;
 	private double startLat;
 	
-	private List<ClubDTO> clubs;
-	private List<ShotProfileDTO> shotProfiles;
+	private List<Club> clubs;
+	private List<ShotProfile> shotProfiles;
 
-	private HoleDTO currentHole;
+	private Hole currentHole;
 	
 	private Bitmap[] icons;
 	
@@ -52,7 +51,7 @@ public class RecordShotActivity extends Activity {
 		
 		startLat = getIntent().getDoubleExtra("startLat", -1.0);
 		startLon = getIntent().getDoubleExtra("startLon", -1.0);
-		currentHole = (HoleDTO) getIntent().getSerializableExtra("currentHole"); 
+		currentHole = (Hole) getIntent().getSerializableExtra("currentHole"); 
 		
 		TextView tv = (TextView) findViewById(R.id.holeVal);
 		tv.setText("" + currentHole.getNumber());
@@ -76,7 +75,7 @@ public class RecordShotActivity extends Activity {
 		
 		final CustomSpinnerView clubCsv = (CustomSpinnerView) findViewById(R.id.clubSpinner);
 		List<MyListItem> l = new ArrayList<MyListItem>();
-		for(ClubDTO c : clubs) {
+		for(Club c : clubs) {
 			
 			l.add(new MyListItem(c.getId(), c.getLongName(), null, icons[c.getIconId()]));
 		}
@@ -86,7 +85,7 @@ public class RecordShotActivity extends Activity {
 		
 		final CustomSpinnerView shotShapeCsv = (CustomSpinnerView) findViewById(R.id.shotShapeSpinner);
 		List<MyListItem> l2 = new ArrayList<MyListItem>();
-		for(ShotProfileDTO c : shotProfiles) {
+		for(ShotProfile c : shotProfiles) {
 			l2.add(new MyListItem(c.getId(), c.getName(), null,  icons[c.getIconId()]));
 		}
 		shotShapeCsv.setItems(l2.toArray(new MyListItem[]{}));

@@ -1,6 +1,7 @@
 package com.squeed.golftracker.common.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ public class GolfVenue {
 	private Country country;
 	private Long longitude;
 	private Long latitude;
-	private Set<Course> courses = new HashSet<Course>();
+	private List<Course> courses = new ArrayList<Course>();
 	
 	public GolfVenue() {}
 	
@@ -60,10 +61,10 @@ public class GolfVenue {
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
-	public Set<Course> getCourses() {
+	public List<Course> getCourses() {
 		return courses;
 	}
-	public void setCourses(Set<Course> courses) {
+	public void setCourses(List<Course> courses) {
 		this.courses = courses;
 	}
 	

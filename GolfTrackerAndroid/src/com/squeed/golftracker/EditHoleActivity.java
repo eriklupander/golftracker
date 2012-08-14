@@ -29,18 +29,17 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squeed.golftracker.entity.CourseDTO;
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.PointOfInterestDTO;
+import com.squeed.golftracker.common.model.Course;
+import com.squeed.golftracker.common.model.Hole;
+import com.squeed.golftracker.common.model.PointOfInterest;
 import com.squeed.golftracker.helper.DbHelper;
-import com.squeed.golftracker.helper.UserAgent;
 
 public class EditHoleActivity extends ListActivity {
 
-	private CourseDTO course;
+	private Course course;
 	private int currentHoleNumber = 0;
-	private HoleDTO currentHole;
-	private PointOfInterestDTO[] pois;
+	private Hole currentHole;
+	private PointOfInterest[] pois;
 	private Animation inAnimation;
 
 	private ArrayAdapter<CharSequence> adapter;
@@ -65,8 +64,9 @@ public class EditHoleActivity extends ListActivity {
 
 		dbHelper = new DbHelper(this);
 
-		course = dbHelper.loadCourseFromDb(dbHelper.getReadableDatabase(),
-				courseId);
+		// TODO there should only be one client-side instance of a course.
+//		course = dbHelper.loadCourseFromDb(dbHelper.getReadableDatabase(),
+//				courseId);
 
 		updateHole();
 
@@ -82,17 +82,18 @@ public class EditHoleActivity extends ListActivity {
 	protected void onResume() {
 		super.onResume();
 		Long courseId = getIntent().getLongExtra("course_id", -1L);
-		course = dbHelper.loadCourseFromDb(dbHelper.getReadableDatabase(), courseId);
+		// TODO restore course from local storage since it might contain changes.
+		// course = dbHelper.loadCourseFromDb(dbHelper.getReadableDatabase(), courseId);
 		updateHole();
 	}
 
 	private void updateHole() {
-		currentHole = (HoleDTO) course.getHoles().get(currentHoleNumber);
+		currentHole = (Hole) course.getHoles().get(currentHoleNumber);
 
-		pois = new PointOfInterestDTO[currentHole.getPois().size()];
+		pois = new PointOfInterest[currentHole.getPois().size()];
 		int i = 0;
-		for (PointOfInterestDTO poi : currentHole.getPois()) {
-			pois[i++] = (PointOfInterestDTO) poi;
+		for (PointOfInterest poi : currentHole.getPois()) {
+			pois[i++] = (PointOfInterest) poi;
 		}
 
 		Spinner hcpSpinner = (Spinner) findViewById(R.id.editHoleHcpFld);
@@ -103,8 +104,8 @@ public class EditHoleActivity extends ListActivity {
 
 		// If hole (currentHole) exists on course, select values on spinners.
 
-		if (currentHole.getIndex() != 0) {
-			hcpSpinner.setSelection(currentHole.getIndex() - 1);
+		if (currentHole.getHcp() != 0) {
+			hcpSpinner.setSelection(currentHole.getHcp() - 1);
 		}
 		if (currentHole.getPar() != 0) {
 			Spinner parSpinner = ((Spinner) findViewById(R.id.editHoleParFld));
@@ -144,8 +145,8 @@ public class EditHoleActivity extends ListActivity {
 	public boolean onContextItemSelected(MenuItem item) {
 	  AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
 	  int menuItemIndex = item.getItemId();
-	  final PointOfInterestDTO poi = pois[info.position];
-	  Log.i("EditHoleActivity", "Selected POI: " + poi.getName());
+	  final PointOfInterest poi = pois[info.position];
+	  Log.i("EditHoleActivity", "Selected POI: " + poi.getTitle());
 	  if(menuItemIndex == 0) {
 		  // Edit POI
 		  AlertDialog.Builder builder;				
@@ -156,7 +157,7 @@ public class EditHoleActivity extends ListActivity {
 			                               (ViewGroup) findViewById(R.id.custom_dialog));
 			
 			final EditText editText = (EditText) layout.findViewById(R.id.poiNameFld);	
-			editText.setText(poi.getName());
+			editText.setText(poi.getTitle());
 			
 			
 			
@@ -172,12 +173,12 @@ public class EditHoleActivity extends ListActivity {
 				
 				@Override
 				public void onClick(View v) {
-					dbHelper.updatePoiName(dbHelper.getWritableDatabase(), poi.getId(), editText.getText().toString().trim(), poi.getOwnerId(), UserAgent.OWNER_ID);
-					poi.setName(editText.getText().toString().trim());
+					//dbHelper.updatePoiName(dbHelper.getWritableDatabase(), poi.getId(), editText.getText().toString().trim(), poi.getCreatedBy(), UserAgent.OWNER_ID);
+					poi.setTitle(editText.getText().toString().trim());
 					alertDialog.dismiss();
 					Toast.makeText(
 							EditHoleActivity.this,
-							"Namn uppdaterat!",
+							"Namn uppdaterat! Inte",
 							Toast.LENGTH_SHORT).show();
 				}
 			});
@@ -196,7 +197,9 @@ public class EditHoleActivity extends ListActivity {
 	  } else if(menuItemIndex == 1) {
 		  // Delete POI
 		  currentHole.getPois().remove(poi.getType());
-		  dbHelper.deletePoi(dbHelper.getWritableDatabase(), poi, UserAgent.OWNER_ID);
+		  
+		  // TODO figure out some cool way to store client-side changes until sync-time
+		  //dbHelper.deletePoi(dbHelper.getWritableDatabase(), poi, UserAgent.OWNER_ID);
 	  }	  
 	  
 	  updateHole();
@@ -214,12 +217,13 @@ public class EditHoleActivity extends ListActivity {
 
 						// TODO - save Par and Hcp values directly to database on change, remove save button?
 						
-						currentHole.setIndex(Integer
+						currentHole.setHcp(Integer
 								.parseInt((String) hcpSpinner.getSelectedItem()));
 						currentHole.setPar(Integer.parseInt((String) parSpinner
 								.getSelectedItem()));
-						dbHelper.updateHole(dbHelper.getWritableDatabase(),
-								currentHole);
+						// TODO add code that keeps client-side changes until sync
+//						dbHelper.updateHole(dbHelper.getWritableDatabase(),
+//								currentHole);
 						Toast.makeText(
 								EditHoleActivity.this,
 								"Hålet sparat!",
@@ -300,7 +304,7 @@ public class EditHoleActivity extends ListActivity {
 	protected void onActivityResult(int reqCode, int resCode, Intent data) {
 		Log.i("EditHoleActivity", "ENTER - onActivityResult: " + reqCode + " / " + resCode);
 		if(reqCode == 666 && data != null && data.getSerializableExtra("poi") != null) {
-			PointOfInterestDTO poi = (PointOfInterestDTO) data.getSerializableExtra("poi");
+			PointOfInterest poi = (PointOfInterest) data.getSerializableExtra("poi");
 			currentHole.getPois().add(poi);
 			
 			updateHole();
@@ -381,11 +385,11 @@ public class EditHoleActivity extends ListActivity {
 			}
 
 			// Bind the data efficiently with the holder.
-			holder.id = ((PointOfInterestDTO) getItem(position)).getId();
+			holder.id = ((PointOfInterest) getItem(position)).getId();
 			holder.name
-					.setText(((PointOfInterestDTO) getItem(position)).getName());
+					.setText(((PointOfInterest) getItem(position)).getTitle());
 
-			String type = ((PointOfInterestDTO) getItem(position)).getType();
+			String type = ((PointOfInterest) getItem(position)).getType().getName();
 			if (type.equals("fg") || type.equals("mg") || type.equals("bg")) {
 				holder.icon.setImageBitmap(mIcon1);
 			} else if (isBunker(type)) {

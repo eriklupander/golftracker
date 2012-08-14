@@ -44,4 +44,13 @@ public interface CourseService {
     @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 	List<TinyGolfVenue> findGolfVenueByName(@PathParam("name") String name);
 	
+	@Path("{id}/courses")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+	List<Course> getCoursesOfVenue(@PathParam("id") Long venueId);
+	/**
+	 * When users submit new courses, new holes or new pois, we want to separate different entities a bit.
+	 * 
+	 */
+	
 }

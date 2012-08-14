@@ -20,15 +20,15 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.squeed.golftracker.entity.HoleDTO;
-import com.squeed.golftracker.entity.PointOfInterestDTO;
+import com.squeed.golftracker.common.model.Hole;
+import com.squeed.golftracker.common.model.PointOfInterest;
 import com.squeed.golftracker.helper.LongLatConverter;
 
 public class PoiListActivity extends ListActivity {
 
-	private HoleDTO hole;
+	private Hole hole;
 	private Location lastLocation;
-	private PointOfInterestDTO[] pois;
+	private PointOfInterest[] pois;
 	private LocationManager locMgr;
 	private ListView lv;
 	
@@ -36,12 +36,12 @@ public class PoiListActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.poi_list_page);
-	  hole = (HoleDTO) getIntent().getSerializableExtra("hole");
+	  hole = (Hole) getIntent().getSerializableExtra("hole");
 	 
-	  pois = new PointOfInterestDTO[hole.getPois().size()];
+	  pois = new PointOfInterest[hole.getPois().size()];
 	  int i = 0;
-	  for(PointOfInterestDTO poi : hole.getPois()) {
-		  pois[i++] = (PointOfInterestDTO) poi;
+	  for(PointOfInterest poi : hole.getPois()) {
+		  pois[i++] = (PointOfInterest) poi;
 	  }
 	  
 	  ((TextView) findViewById(R.id.poi_list_header_text)).setText("Hål " + hole.getNumber() + " Par " + hole.getPar() + " Hcp " + hole.getId());
@@ -147,13 +147,13 @@ public class PoiListActivity extends ListActivity {
             }
             
             // Bind the data efficiently with the holder.
-            holder.id = ((PointOfInterestDTO) getItem(position)).getId();
-            holder.name.setText( ((PointOfInterestDTO) getItem(position)).getName());
+            holder.id = ((PointOfInterest) getItem(position)).getId();
+            holder.name.setText( ((PointOfInterest) getItem(position)).getName());
             //holder.type.setText( ((PointOfInterest) getItem(position)).getType());
             if(lastLocation != null) {
-            	holder.distance.setText( LongLatConverter.getDistance(lastLocation, (PointOfInterestDTO) getItem(position)) + " m");
+            	holder.distance.setText( LongLatConverter.getDistance(lastLocation, (PointOfInterest) getItem(position)) + " m");
             }
-            String type = ((PointOfInterestDTO) getItem(position)).getType();
+            String type = ((PointOfInterest) getItem(position)).getType();
             if(type.equals("fg") || type.equals("mg") || type.equals("bg")) {
             	holder.icon.setImageBitmap(mIcon1);
             } else if(isBunker(type)) {

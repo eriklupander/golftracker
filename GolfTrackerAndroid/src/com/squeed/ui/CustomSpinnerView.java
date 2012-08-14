@@ -344,7 +344,7 @@ public class CustomSpinnerView extends View {
 		lastY = -1;
 		Animation animation = getAnimation();
 		if(animation != null) {
-			animation.cancel();
+			//animation.cancel();
 			animation.reset();
 			if(animation instanceof ScrollAnimation)
 				((ScrollAnimation) animation).initialVelocity = 0.0f;
@@ -391,31 +391,31 @@ public class CustomSpinnerView extends View {
     
 	
     /** Show an event in the LogCat view, for debugging */
-	private void dumpEvent(MotionEvent event) {
-	   String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
-	      "POINTER_DOWN" , "POINTER_UP" , "7?" , "8?" , "9?" };
-	   StringBuilder sb = new StringBuilder();
-	   int action = event.getAction();
-	   int actionCode = action & MotionEvent.ACTION_MASK;
-	   sb.append("event ACTION_" ).append(names[actionCode]);
-	   if (actionCode == MotionEvent.ACTION_POINTER_DOWN
-	         || actionCode == MotionEvent.ACTION_POINTER_UP) {
-	      sb.append("(pid " ).append(
-	      action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
-	      sb.append(")" );
-	   }
-	   sb.append("[" );
-	   for (int i = 0; i < event.getPointerCount(); i++) {
-	      sb.append("#" ).append(i);
-	      sb.append("(pid " ).append(event.getPointerId(i));
-	      sb.append(")=" ).append((int) event.getX(i));
-	      sb.append("," ).append((int) event.getY(i));
-	      if (i + 1 < event.getPointerCount())
-	         sb.append(";" );
-	   }
-	   sb.append("]" );
-	   Log.d("CustomSpinnerView", sb.toString() + " currentListOffset: " + currentListOffset);
-	}
+//	private void dumpEvent(MotionEvent event) {
+//	   String names[] = { "DOWN" , "UP" , "MOVE" , "CANCEL" , "OUTSIDE" ,
+//	      "POINTER_DOWN" , "POINTER_UP" , "7?" , "8?" , "9?" };
+//	   StringBuilder sb = new StringBuilder();
+//	   int action = event.getAction();
+//	   int actionCode = action & MotionEvent.ACTION_MASK;
+//	   sb.append("event ACTION_" ).append(names[actionCode]);
+//	   if (actionCode == MotionEvent.ACTION_POINTER_DOWN
+//	         || actionCode == MotionEvent.ACTION_POINTER_UP) {
+//	      sb.append("(pid " ).append(
+//	      action >> MotionEvent.ACTION_POINTER_ID_SHIFT);
+//	      sb.append(")" );
+//	   }
+//	   sb.append("[" );
+//	   for (int i = 0; i < event.getPointerCount(); i++) {
+//	      sb.append("#" ).append(i);
+//	      sb.append("(pid " ).append(event.getPointerId(i));
+//	      sb.append(")=" ).append((int) event.getX(i));
+//	      sb.append("," ).append((int) event.getY(i));
+//	      if (i + 1 < event.getPointerCount())
+//	         sb.append(";" );
+//	   }
+//	   sb.append("]" );
+//	   Log.d("CustomSpinnerView", sb.toString() + " currentListOffset: " + currentListOffset);
+//	}
 
     /**
      * Render the text
@@ -575,7 +575,7 @@ public class CustomSpinnerView extends View {
     		currentListOffset += (intp.getInterpolation(1.0f - interpolatedTime)*initialVelocity);
     		Log.i("MyAnimation", "Current offset: " + currentListOffset + " max: " + maxOffset + " min: " + minOffset);
     		if(currentListOffset < maxOffset || currentListOffset > baseOffset) {
-    			cancel();    			
+    			reset();    			
     		}
     	}
     }
@@ -599,7 +599,7 @@ public class CustomSpinnerView extends View {
     		currentListOffset = startOffset - percentage*scrollBy;    		
     		if(percentage >= 1.0f) {
     			currentListOffset = startOffset-scrollBy;
-    			cancel();
+    			reset();
     		}
     	}
     }
