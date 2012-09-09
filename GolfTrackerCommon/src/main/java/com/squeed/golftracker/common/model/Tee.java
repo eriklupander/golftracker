@@ -18,8 +18,8 @@ public class Tee {
 	 */
 	private TeeType teeType;
 	
-	private Long longitude;
-	private Long latitude;
+	private Double longitude;
+	private Double latitude;
 	
 	public Tee() {}
 	
@@ -27,7 +27,7 @@ public class Tee {
 		this.teeType = teeType;
 	}
 	
-	public Tee(TeeType teeType, Long longitude, Long latitude) {
+	public Tee(TeeType teeType, Double longitude, Double latitude) {
 		super();
 		this.teeType = teeType;
 		this.longitude = longitude;
@@ -50,16 +50,16 @@ public class Tee {
 	public void setTeeType(TeeType teeType) {
 		this.teeType = teeType;
 	}
-	public Long getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Long longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	public Long getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Long latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 	

@@ -31,7 +31,7 @@ public class LongLatConverter {
 
 	public static String getDistance(Location location, PointOfInterest poi) {
 		if(poi == null)
-			return "Ingen data";
+			return "XXX";
 		return nf.format(getRawDistance(location.getLongitude(), location.getLatitude(), poi.getLongitude(), poi.getLatitude()));
 	}
 	

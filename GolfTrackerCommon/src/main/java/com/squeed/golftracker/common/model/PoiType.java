@@ -9,9 +9,18 @@ import javax.persistence.Table;
 @Table(name="poi_type")
 public class PoiType {
 	
-	private Long id;
-	
+	public static final String FRONT_GREEN = "FRONT_GREEN";
+	public static final String MID_GREEN = "MID_GREEN";
+	public static final String BACK_GREEN = "BACK_GREEN";
+
+	private Long id;	
 	private String name;
+	
+	public PoiType() {}
+
+	public PoiType(String name) {
+		this.name = name;
+	}
 
 	@Id
 	@GeneratedValue

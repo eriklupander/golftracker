@@ -85,6 +85,9 @@ public class SelectCourseActivity extends ListActivity {
         }
         
         public int getCount() {
+        	if(allCourses == null) {
+        		return 0;
+        	}
             return allCourses.size();
         }
         

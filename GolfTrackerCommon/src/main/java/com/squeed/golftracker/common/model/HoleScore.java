@@ -1,9 +1,12 @@
 package com.squeed.golftracker.common.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -12,9 +15,9 @@ public class HoleScore {
 	
 	
 	private Long id;
-	private User player;
 	private Hole hole;
 	private Integer score;
+	private List<Shot> shots;
 	
 	@Id
 	@GeneratedValue
@@ -23,14 +26,6 @@ public class HoleScore {
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	
-	@ManyToOne
-	public User getPlayer() {
-		return player;
-	}
-	public void setPlayer(User player) {
-		this.player = player;
 	}
 	
 	@ManyToOne
@@ -45,6 +40,14 @@ public class HoleScore {
 	}
 	public void setScore(Integer score) {
 		this.score = score;
+	}
+	
+	@OneToMany(orphanRemoval=true)
+	public List<Shot> getShots() {
+		return shots;
+	}
+	public void setShots(List<Shot> shots) {
+		this.shots = shots;
 	}
 	
 	// TODO Add statistics stuff such as tee club, direction of drive, putts, bunker shots, penalties etc.

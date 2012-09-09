@@ -1,5 +1,7 @@
 package com.squeed.golftracker;
 
+import java.util.Calendar;
+
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +16,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squeed.golftracker.common.model.Course;
-import com.squeed.golftracker.common.model.Tee;
+import com.squeed.golftracker.common.model.Round;
+import com.squeed.golftracker.common.model.RoundScore;
 import com.squeed.golftracker.common.model.TeeType;
 import com.squeed.golftracker.rest.RestClient;
 
@@ -24,9 +27,13 @@ public class SelectTeeActivity extends ListActivity {
 	private Course course;
 	private ListView lv;
 	
+	private GolfTrackerAppContext appState;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
+	  this.appState = ((GolfTrackerAppContext)getApplicationContext());
+
 	  setContentView(R.layout.select_tee_page);
 	  courseId = getIntent().getLongExtra("courseId", -1L);
 	  
@@ -80,10 +87,23 @@ public class SelectTeeActivity extends ListActivity {
 					public void onClick(View v) {
 						Log.d("SelectTeeActivity", "Clicked on course!");
 						Long teeId = ((ViewHolder) v.getTag()).id;
-//						Intent i = new Intent(SelectTeeActivity.this, GolfTrackerActivity.class);
-//						i.putExtra("teeId", teeId);
-//						i.putExtra("courseId", courseId);
-//						startActivity(i);
+						Intent i = new Intent(SelectTeeActivity.this, PlayingGolfActivity.class);
+						
+						// HERE: Create the "Round" session object.
+						Round round = new Round();
+						round.setCourse(course);
+						round.setDate(Calendar.getInstance());
+						
+						RoundScore roundScore = new RoundScore();
+						roundScore.setTeeType(((ViewHolder) v.getTag()).teeType);
+						roundScore.setUser(appState.getLoggedInUser());
+						round.getRoundScore().add(roundScore);
+						
+						appState.setCurrentRound(round);
+						
+						// TODO Validate so we have all requisite info on the round object.
+						
+						startActivity(i);
 					}
                 	
                 });
@@ -108,7 +128,7 @@ public class SelectTeeActivity extends ListActivity {
             holder.id = ((TeeType) getItem(position)).getId();
             holder.name.setText( ((TeeType) getItem(position)).getName());
             holder.distance.setText( "N/A");
-           
+            holder.teeType = (TeeType) getItem(position);
             
             //holder.icon = (ImageView) convertView.findViewById(R.id.poi_icon);
             
@@ -123,6 +143,7 @@ public class SelectTeeActivity extends ListActivity {
             Long id;
 			TextView name;            
             TextView distance;
+            TeeType teeType;
          //   ImageView icon;
         }
         

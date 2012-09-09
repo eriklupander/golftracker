@@ -1,8 +1,10 @@
 package com.squeed.golftracker.server.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -19,6 +21,8 @@ import com.squeed.golftracker.common.model.Course;
 import com.squeed.golftracker.common.model.GolfVenue;
 import com.squeed.golftracker.common.model.Hole;
 import com.squeed.golftracker.common.model.Manufacturer;
+import com.squeed.golftracker.common.model.PoiType;
+import com.squeed.golftracker.common.model.PointOfInterest;
 import com.squeed.golftracker.common.model.Setting;
 import com.squeed.golftracker.common.model.Tee;
 import com.squeed.golftracker.common.model.TeeType;
@@ -31,7 +35,10 @@ public class InitDataSingleton {
 
 	private static final String INIT_DATA_RUN = "init.data.run";
 	@Inject
-	EntityManager em;	
+	EntityManager em;
+	private PoiType fg;
+	private PoiType mg;
+	private PoiType bg;	
 	
 	@PostConstruct
 	public void init() {
@@ -69,8 +76,11 @@ public class InitDataSingleton {
 
 		Country sweden = (Country) em.createQuery("select c from Country c WHERE c.code='SE'").getSingleResult();
 		
-		setupReferenceCourse(sweden);
-		setupUsers();
+		User user = setupUsers();
+		setupPoiTypes();
+		setupReferenceCourse(sweden, user);
+		
+		
 		
 		// Write setting flag
 		Setting settingsInitialized = new Setting(INIT_DATA_RUN, "1");
@@ -79,7 +89,13 @@ public class InitDataSingleton {
 		System.out.println("FINISHED setting up core data.");
 	}
 
-	private void setupUsers() {
+	private void setupPoiTypes() {
+		fg = em.merge(new PoiType(PoiType.FRONT_GREEN));
+		mg = em.merge(new PoiType(PoiType.MID_GREEN));
+		bg = em.merge(new PoiType(PoiType.BACK_GREEN));
+	}
+
+	private User setupUsers() {
 		User u = new User();
 		u.setEmail("erik.lupander@squeed.com");
 		u.setName("Erik Lupander");
@@ -87,6 +103,7 @@ public class InitDataSingleton {
 		setupClubSet(u);
 		
 		u = em.merge(u);
+		return u;
 	}
 
 	private void setupClubSet(User u) {
@@ -124,7 +141,7 @@ public class InitDataSingleton {
 		u.setClubSet(cs);
 	}
 
-	private void setupReferenceCourse(Country country) {
+	private void setupReferenceCourse(Country country, User user) {
 		GolfVenue gv = new GolfVenue();
 		gv.setCountry(country);
 		gv.setName("Sotenäs Golfklubb");
@@ -139,16 +156,40 @@ public class InitDataSingleton {
 		
 		addTeeTypes(c);
 		addTeeTypes(c2);
-		addHoles(c, 18);
-		addHoles(c2, 9);
+		addHoles(c, 18, user);
+		addHoles(c2, 9, user);
 		gv.getCourses().add(c);
 		gv.getCourses().add(c2);
 		em.merge(gv);
 	}
 
-	private void addHoles(Course c, int numOfHoles) {
+	private void addHoles(Course c, int numOfHoles, User user) {
 		List<Hole> holes = new ArrayList<Hole>();
-		for(int a = 1 ; a < numOfHoles+1; a++) {
+		// Let's hard-code a few holes
+		TeeType yel = c.getTeeOfType(TeeType.YELLOW);
+		TeeType red = c.getTeeOfType(TeeType.RED);
+		
+		Hole h1 = new Hole(1, 7, 4);
+		h1.getTees().add(new Tee(yel, 11.380046, 58.435646));
+		h1.getTees().add(new Tee(red, 11.379507, 58.435499));
+		h1.getPois().add(new PointOfInterest(fg, "Framkant green", 11.376318, 58.433425, user));
+		h1.getPois().add(new PointOfInterest(mg, "Mitten green", 11.376281, 58.433306, user));
+		h1.getPois().add(new PointOfInterest(bg, "Bakkant green", 11.376262, 58.433244, user));
+		
+		
+		Hole h2 = new Hole(2, 13, 3);
+		h2.getTees().add(new Tee(yel, 11.377222, 58.432922));
+		h2.getTees().add(new Tee(red, 11.376911, 58.43295));
+		h2.getPois().add(new PointOfInterest(fg, "Framkant green", 11.375076, 58.432729, user));
+		h2.getPois().add(new PointOfInterest(mg, "Mitten green", 11.374775, 58.432703, user));
+		h2.getPois().add(new PointOfInterest(bg, "Bakkant green", 11.374497, 58.432647, user));
+		
+	
+		
+		holes.add(h1);
+		holes.add(h2);
+		
+		for(int a = 3 ; a < numOfHoles-1; a++) {
 			Hole h = new Hole();
 			h.setHcp(a);
 			h.setNumber(a);

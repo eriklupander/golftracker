@@ -62,6 +62,14 @@ public class Course implements Serializable {
 	public void setTees(List<TeeType> tees) {
 		this.tees = tees;
 	}
+	public TeeType getTeeOfType(String type) {
+		for(TeeType tt : tees) {
+			if(tt.getName().equals(type)) {
+				return tt;
+			}
+		}
+		return null;
+	}
 	
 	
 }

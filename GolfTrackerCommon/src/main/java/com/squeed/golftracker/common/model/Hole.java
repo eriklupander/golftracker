@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="hole")
@@ -26,6 +27,19 @@ public class Hole implements Serializable {
 	private Set<Tee> tees = new HashSet<Tee>();
 	private Set<PointOfInterest> pois = new HashSet<PointOfInterest>();
 	
+	public Hole() {}
+	
+	
+	
+	public Hole(Integer number, Integer hcp, Integer par) {
+		super();
+		this.number = number;
+		this.hcp = hcp;
+		this.par = par;
+	}
+
+
+
 	@Id
 	@GeneratedValue
 	public Long getId() {
@@ -68,5 +82,4 @@ public class Hole implements Serializable {
 	public void setPois(Set<PointOfInterest> pois) {
 		this.pois = pois;
 	}
-	
 }

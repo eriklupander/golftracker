@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/LinearLayout1"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@drawable/background_01p">
+	<RelativeLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:id="@+id/top_control_bar">
+		<ImageView android:layout_width="wrap_content" android:src="@drawable/green_icon"
+			android:id="@+id/imageView33" android:layout_height="wrap_content"
+			android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+			android:layout_marginLeft="5dip" android:layout_marginTop="5dip"></ImageView>
+		<TextView android:id="@+id/hole_header_text"
+			android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge"
+			android:layout_width="wrap_content" android:text="TextView"
+			android:layout_alignParentTop="true" android:layout_alignParentRight="true"
+			android:layout_toRightOf="@+id/imageView33" android:layout_marginTop="5dip"
+			android:layout_marginLeft="10dip"></TextView>
+	</RelativeLayout>
+	<Button android:id="@+id/backButton1" android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:text=""
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentLeft="true" android:background="@drawable/ic_menu_back"></Button>
+	<Button android:id="@+id/forwardButton1" android:layout_height="wrap_content"
+		android:layout_width="wrap_content" android:text=""
+		android:layout_alignParentBottom="true"
+		android:layout_alignParentRight="true" android:background="@drawable/ic_menu_forward"></Button>
+	<TextView android:id="@+id/textView2" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="wrap_content" android:layout_alignBaseline="@+id/textView1"
+		android:layout_alignBottom="@+id/textView1" android:text="@string/frontGreenLbl"
+		android:layout_marginLeft="3dip"></TextView>
+	<TextView android:id="@+id/textView3" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="wrap_content" android:text="@string/backGreenLbl"
+		android:layout_alignBaseline="@+id/textView2"
+		android:layout_alignBottom="@+id/textView2"
+		android:layout_alignParentRight="true" android:layout_marginRight="3dip"></TextView>
+	<TextView android:id="@+id/textView1" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_width="wrap_content" android:layout_above="@+id/openListBtn1"
+		android:layout_centerHorizontal="true" android:layout_marginBottom="87dp"
+		android:text="@string/midGreenLbl"></TextView>
+	<TextView android:id="@+id/midGreenVal" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="---"
+		android:layout_alignTop="@+id/backGreenVal" android:layout_alignRight="@+id/textView1"
+		android:layout_alignLeft="@+id/textView1" android:gravity="center_horizontal"></TextView>
+	<TextView android:id="@+id/frontGreenVal"
+		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content" android:text="---"
+		android:layout_below="@+id/textView2" android:layout_alignRight="@+id/textView2"
+		android:layout_alignParentLeft="true" android:gravity="center_horizontal"></TextView>
+	<TextView android:id="@+id/backGreenVal"
+		android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceMedium"
+		android:layout_width="wrap_content" android:text="---"
+		android:layout_below="@+id/textView3" android:layout_alignLeft="@+id/textView3"
+		android:layout_alignParentRight="true" android:gravity="center_horizontal"></TextView>
+	<TextView android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:layout_below="@+id/parText"
+		android:layout_centerHorizontal="true" android:layout_marginTop="18dp"
+		android:text="@string/dashes" android:id="@+id/parVal"
+		android:textSize="18pt" android:textStyle="bold"></TextView>
+	<TextView android:id="@+id/textView4" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="@string/holeLbl"
+		android:layout_below="@+id/top_control_bar" android:layout_alignRight="@+id/backButton1"
+		android:layout_marginTop="36dp"></TextView>
+	<TextView android:id="@+id/parText" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="@string/parLbl"
+		android:layout_alignBaseline="@+id/textView4"
+		android:layout_alignBottom="@+id/textView4"
+		android:layout_centerHorizontal="true"></TextView>
+	<TextView android:id="@+id/textView5" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="@string/hcpLbl"
+		android:layout_alignBaseline="@+id/parText"
+		android:layout_alignBottom="@+id/parText" android:layout_alignLeft="@+id/forwardButton1"></TextView>
+	<TextView android:textStyle="bold" android:textSize="18pt"
+		android:id="@+id/holeValue" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="@string/dashes"
+		android:layout_alignBaseline="@+id/parVal" android:layout_alignBottom="@+id/parVal"
+		android:layout_alignLeft="@+id/textView4"></TextView>
+	<TextView android:textStyle="bold" android:textSize="18pt"
+		android:id="@+id/hcpVal" android:layout_height="wrap_content"
+		android:textAppearance="?android:attr/textAppearanceLarge"
+		android:layout_width="wrap_content" android:text="@string/dashes"
+		android:layout_alignBaseline="@+id/holeValue"
+		android:layout_alignBottom="@+id/holeValue" android:layout_alignRight="@+id/textView5"></TextView>
+	<Button android:layout_width="wrap_content" android:background="@drawable/ic_menu_compass" android:id="@+id/openListBtn1" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_toRightOf="@+id/backButton1"></Button>
+	<Button android:layout_width="wrap_content" android:background="@drawable/save_icon" android:id="@+id/enterScoreBtn" android:layout_height="wrap_content" android:layout_alignBaseline="@+id/openListBtn1" android:layout_alignBottom="@+id/openListBtn1" android:layout_toLeftOf="@+id/parVal"></Button>
+	<Button android:layout_width="wrap_content" android:background="@drawable/golf_guide" android:id="@+id/showMapBtn" android:layout_height="wrap_content" android:layout_alignBaseline="@+id/forwardButton1" android:layout_alignBottom="@+id/forwardButton1" android:layout_alignLeft="@+id/backGreenVal"></Button>
+	<Button android:layout_width="wrap_content" android:background="@drawable/measure_icon" android:layout_height="wrap_content" android:layout_alignBaseline="@+id/showMapBtn" android:layout_alignBottom="@+id/showMapBtn" android:layout_alignRight="@+id/midGreenVal" android:id="@+id/measureShotBtnId"></Button>
+</RelativeLayout>

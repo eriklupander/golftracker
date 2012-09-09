@@ -18,6 +18,18 @@ public class PointOfInterest {
 	private Double latitude;
 	private User createdBy;
 	
+	public PointOfInterest() {}
+	
+	public PointOfInterest(PoiType type, String title, Double longitude,
+			Double latitude, User createdBy) {
+		super();
+		this.type = type;
+		this.title = title;
+		this.longitude = longitude;
+		this.latitude = latitude;
+		this.createdBy = createdBy;
+	}
+	
 	@Id
 	@GeneratedValue
 	public Long getId() {

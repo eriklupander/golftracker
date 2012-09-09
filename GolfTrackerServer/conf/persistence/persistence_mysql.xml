@@ -10,7 +10,7 @@
       <jta-data-source>java:jboss/datasources/golftrackerMySQLDS</jta-data-source>
      <jar-file>golftracker-common.jar</jar-file>
      
-     <class>com.squeed.golftracker.common.model.Club</class>     
+      <class>com.squeed.golftracker.common.model.Club</class>     
      <class>com.squeed.golftracker.common.model.ClubSet</class>
      <class>com.squeed.golftracker.common.model.Country</class>
      <class>com.squeed.golftracker.common.model.Course</class>
@@ -21,7 +21,10 @@
      <class>com.squeed.golftracker.common.model.Manufacturer</class>
      <class>com.squeed.golftracker.common.model.PointOfInterest</class>
      <class>com.squeed.golftracker.common.model.PoiType</class>
+     <class>com.squeed.golftracker.common.model.Round</class>
+     <class>com.squeed.golftracker.common.model.RoundScore</class>
      <class>com.squeed.golftracker.common.model.Setting</class>
+     <class>com.squeed.golftracker.common.model.Shot</class>
      <class>com.squeed.golftracker.common.model.Tee</class>
      <class>com.squeed.golftracker.common.model.TeeType</class>
      <class>com.squeed.golftracker.common.model.User</class>
