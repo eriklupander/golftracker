@@ -133,15 +133,22 @@ public class InitDataSingleton {
 		c.setName("Gul/Röd");
 		c.setDescription("5480 meters, mixed park/forest");
 		
+		Course c2 = new Course();		
+		c2.setName("Blå");
+		c2.setDescription("2680 meters, mixed park/forest");
+		
 		addTeeTypes(c);
-		addHoles(c);
+		addTeeTypes(c2);
+		addHoles(c, 18);
+		addHoles(c2, 9);
 		gv.getCourses().add(c);
+		gv.getCourses().add(c2);
 		em.merge(gv);
 	}
 
-	private void addHoles(Course c) {
+	private void addHoles(Course c, int numOfHoles) {
 		List<Hole> holes = new ArrayList<Hole>();
-		for(int a = 1 ; a < 19; a++) {
+		for(int a = 1 ; a < numOfHoles+1; a++) {
 			Hole h = new Hole();
 			h.setHcp(a);
 			h.setNumber(a);

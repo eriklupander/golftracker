@@ -44,7 +44,7 @@ public interface CourseService {
     @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 	List<TinyGolfVenue> findGolfVenueByName(@PathParam("name") String name);
 	
-	@Path("{id}/courses")
+	@Path("/venue/{id}/courses")
     @GET
     @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
 	List<Course> getCoursesOfVenue(@PathParam("id") Long venueId);

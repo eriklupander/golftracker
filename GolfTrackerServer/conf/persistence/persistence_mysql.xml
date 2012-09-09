@@ -7,8 +7,8 @@
    <persistence-unit name="primary">
       <!-- If you are running in a production environment, add a managed 
          data source, the example data source is just for proofs of concept! -->
-      <jta-data-source>java:jboss/datasources/ExampleDS</jta-data-source>
-      <jar-file>golftracker-common.jar</jar-file>
+      <jta-data-source>java:jboss/datasources/golftrackerMySQLDS</jta-data-source>
+     <jar-file>golftracker-common.jar</jar-file>
      
      <class>com.squeed.golftracker.common.model.Club</class>     
      <class>com.squeed.golftracker.common.model.ClubSet</class>
@@ -25,10 +25,13 @@
      <class>com.squeed.golftracker.common.model.Tee</class>
      <class>com.squeed.golftracker.common.model.TeeType</class>
      <class>com.squeed.golftracker.common.model.User</class>
+     
       <properties>
          <!-- Properties for Hibernate -->
-         <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+          <property name="hibernate.hbm2ddl.auto" value="create-drop" />
          <property name="hibernate.show_sql" value="false" />
+         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+
       </properties>
    </persistence-unit>
 </persistence>
