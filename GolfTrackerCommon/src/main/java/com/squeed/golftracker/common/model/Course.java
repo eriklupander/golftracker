@@ -1,8 +1,8 @@
 package com.squeed.golftracker.common.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -20,9 +20,10 @@ public class Course implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
+	private Integer holeCount = 18;
 		
-	private List<Hole> holes;
-	private List<TeeType> tees;
+	private List<Hole> holes = new ArrayList<Hole>();
+	private List<TeeType> tees = new ArrayList<TeeType>();
 	
 	@Id
 	@GeneratedValue
@@ -47,6 +48,12 @@ public class Course implements Serializable {
 	
 	
 	
+	public Integer getHoleCount() {
+		return holeCount;
+	}
+	public void setHoleCount(Integer holeCount) {
+		this.holeCount = holeCount;
+	}
 	@OneToMany(cascade=CascadeType.ALL)
 	public List<Hole> getHoles() {
 		return holes;

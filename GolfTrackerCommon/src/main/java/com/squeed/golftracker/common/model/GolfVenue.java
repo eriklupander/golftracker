@@ -19,8 +19,8 @@ public class GolfVenue {
 	private Long id;
 	private String name;
 	private Country country;
-	private Long longitude;
-	private Long latitude;
+	private Double longitude;
+	private Double latitude;
 	private List<Course> courses = new ArrayList<Course>();
 	
 	public GolfVenue() {}
@@ -47,16 +47,16 @@ public class GolfVenue {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
-	public Long getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(Long longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	public Long getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
-	public void setLatitude(Long latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 	

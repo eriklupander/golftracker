@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="hole")
@@ -36,6 +35,12 @@ public class Hole implements Serializable {
 		this.number = number;
 		this.hcp = hcp;
 		this.par = par;
+	}
+
+
+
+	public Hole(int number) {
+		this.number = number;
 	}
 
 

@@ -28,7 +28,7 @@ public class User {
 	@OneToMany(fetch=FetchType.EAGER)
 	private Set<Game> games;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private ClubSet clubSet;
 	
 	public User() {}

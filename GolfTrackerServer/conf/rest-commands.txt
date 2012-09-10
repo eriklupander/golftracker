@@ -1,0 +1,23 @@
+# CURL-like commands
+
+createVenue
+http://localhost:8080/golftracker-server/rest/editcourse/venue/create
+{"name":"Sisjö GK","longitude":"11.962123","latitude":"57.64292"}
+
+addCourseToVenue
+http://localhost:8080/golftracker-server/rest/editcourse/venue/227/course/create
+{"name":"Niohålsbanan","description":"Rätt platt sak","holeCount":9}
+
+addTeeToCourse
+http://localhost:8080/golftracker-server/rest/editcourse/course/228/createtee
+{"name":"Gul tee"}
+http://localhost:8080/golftracker-server/rest/editcourse/course/228/createtee
+{"name":"Röd tee"}
+
+updateHole
+http://localhost:8080/golftracker-server/rest/editcourse/hole/229/update
+{"hcp":"6","par":"4"}
+
+createPoi
+http://localhost:8080/golftracker-server/rest/editcourse/hole/229/createpoi
+{"title":"Mitten green","createdBy":{"id":"134"},"type":{"id":"136"}, "longitude":"11.962153","latitude":"57.64262"}
