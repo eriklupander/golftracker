@@ -13,7 +13,7 @@
  </context-param>
  <context-param>
   <param-name>resteasy.servlet.mapping.prefix</param-name>
-  <param-value>/rest</param-value>
+  <param-value>/</param-value>
  </context-param>
  <listener>
   <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
@@ -24,6 +24,6 @@
  </servlet>
  <servlet-mapping>
   <servlet-name>resteasy-servlet</servlet-name>
-  <url-pattern>/*</url-pattern>
+  <url-pattern>/rest/*</url-pattern>
  </servlet-mapping>
 </web-app>
