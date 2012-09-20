@@ -26,27 +26,27 @@ public interface CourseService {
 	
 	@Path("/nearby")
     @GET
-    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
 	List<TinyGolfVenue> getNearbyCourses(@QueryParam("lon") Long lon, @QueryParam("lat") Long lat);
 	
 	@Path("{id}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
 	Course getCourse(@PathParam("id") Long id);
 	
 	@Path("/venue/{id}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
 	GolfVenue getGolfVenue(@PathParam("id") Long id);
 
 	@Path("/name/{name}")
     @GET
-    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
 	List<TinyGolfVenue> findGolfVenueByName(@PathParam("name") String name);
 	
 	@Path("/venue/{id}/courses")
     @GET
-    @Produces(MediaType.APPLICATION_JSON + "; charset=UTF-8")
+    @Produces(MediaType.APPLICATION_JSON)
 	List<Course> getCoursesOfVenue(@PathParam("id") Long venueId);
 	/**
 	 * When users submit new courses, new holes or new pois, we want to separate different entities a bit.

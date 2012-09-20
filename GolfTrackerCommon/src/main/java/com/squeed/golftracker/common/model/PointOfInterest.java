@@ -1,10 +1,13 @@
 package com.squeed.golftracker.common.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="poi")
@@ -65,7 +68,8 @@ public class PointOfInterest {
 		this.latitude = latitude;
 	}
 	
-	@ManyToOne(optional=true)
+	@ManyToOne(optional=true, fetch=FetchType.LAZY)
+	@JsonIgnore
 	public User getCreatedBy() {
 		return createdBy;
 	}

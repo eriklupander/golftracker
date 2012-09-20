@@ -28,7 +28,7 @@ public class CourseServiceBean implements CourseService {
 			return tc;
 		}
 		for(GolfVenue gv : venues) {
-			tc.add(new TinyGolfVenue(gv.getId(), gv.getName()));
+			tc.add(new TinyGolfVenue(gv.getId(), gv.getName(), gv.getLatitude(), gv.getLongitude()));
 		}
 		return tc;
 	}
@@ -63,7 +63,7 @@ public class CourseServiceBean implements CourseService {
 			return tc;
 		}
 		for(GolfVenue gv : venues) {			
-			tc.add(new TinyGolfVenue(gv.getId(), gv.getName()));
+			tc.add(new TinyGolfVenue(gv.getId(), gv.getName(), gv.getLatitude(), gv.getLongitude()));
 		}	
 		return tc;
 	}

@@ -1,8 +1,8 @@
 package com.squeed.golftracker.common.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -15,9 +15,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="golf_venue")
-public class GolfVenue {
+public class GolfVenue implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private String name;
+	private String description;
 	private Country country;
 	private Double longitude;
 	private Double latitude;
@@ -40,6 +46,15 @@ public class GolfVenue {
 		this.name = name;
 	}
 	
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	@ManyToOne
 	public Country getCountry() {
 		return country;

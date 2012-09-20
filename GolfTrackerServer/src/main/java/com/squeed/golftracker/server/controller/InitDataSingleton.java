@@ -1,10 +1,8 @@
 package com.squeed.golftracker.server.controller;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -39,6 +37,9 @@ public class InitDataSingleton {
 	private PoiType fg;
 	private PoiType mg;
 	private PoiType bg;	
+	
+	TeeType yel;
+	TeeType red;
 	
 	@PostConstruct
 	public void init() {
@@ -145,6 +146,9 @@ public class InitDataSingleton {
 		GolfVenue gv = new GolfVenue();
 		gv.setCountry(country);
 		gv.setName("Sotenäs Golfklubb");
+		gv.setDescription("I hjärtat av Västkusten, bara några kilometer från Bovallstrand, Hunnebostrand, Kungshamn och Smögen, ligger Sotenäs Golfklubb. En 27:håls anläggning i vacker Bohuslänsk miljö.");
+		gv.setLongitude(11.378657);
+		gv.setLatitude(58.436222);
 		
 		Course c = new Course();		
 		c.setName("Gul/Röd");
@@ -166,8 +170,7 @@ public class InitDataSingleton {
 	private void addHoles(Course c, int numOfHoles, User user) {
 		List<Hole> holes = new ArrayList<Hole>();
 		// Let's hard-code a few holes
-		TeeType yel = c.getTeeOfType(TeeType.YELLOW);
-		TeeType red = c.getTeeOfType(TeeType.RED);
+		
 		
 		Hole h1 = new Hole(1, 7, 4);
 		h1.getTees().add(new Tee(yel, 11.380046, 58.435646));
@@ -204,11 +207,13 @@ public class InitDataSingleton {
 
 	private void addTeeTypes(Course c) {
 		List<TeeType> tees = new ArrayList<TeeType>();
-		TeeType yellow = new TeeType();
-		yellow.setName("Gul");
-		tees.add(yellow);
-		TeeType red = new TeeType();
+		yel = new TeeType();
+		yel.setName("Gul");
+		yel = em.merge(yel);
+		tees.add(yel);
+		red = new TeeType();
 		red.setName("Röd");
+		red = em.merge(red);
 		tees.add(red);
 		
 		c.setTees(tees);

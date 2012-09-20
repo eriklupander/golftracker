@@ -1,5 +1,6 @@
 package com.squeed.golftracker.server.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -13,16 +14,20 @@ import com.squeed.golftracker.common.model.Hole;
 import com.squeed.golftracker.common.model.PoiType;
 import com.squeed.golftracker.common.model.PointOfInterest;
 import com.squeed.golftracker.common.model.TeeType;
+import com.squeed.golftracker.common.model.tiny.TinyGolfVenue;
 
 @Local(EditCourseService.class)
 @Stateless
 public class EditCourseServiceBean implements EditCourseService {
+	
+	//Logger log = Logger.getLogger(EditCourseServiceBean.class);
 	
 	@Inject
 	EntityManager em;
 
 	@Override
 	public GolfVenue addVenue(GolfVenue venue) {
+		//log.info("Creating new GolfVenue: " + venue.getName());
 		return em.merge(venue);
 	}
 
@@ -75,4 +80,18 @@ public class EditCourseServiceBean implements EditCourseService {
 		return em.createQuery("SELECT pt FROM PoiType pt").getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<TinyGolfVenue> getTinyVenues() {
+		List<GolfVenue> resultList = em.createQuery("SELECT v FROM GolfVenue v").getResultList();
+		
+		List<TinyGolfVenue> l = new ArrayList<TinyGolfVenue>();
+		for(GolfVenue gv : resultList) {
+			l.add(new TinyGolfVenue(gv.getId(), gv.getName(), gv.getLatitude(), gv.getLongitude()));
+		}
+		
+		return l;
+	}
+
+	
 }
