@@ -175,6 +175,10 @@ function loadHole(holeId) {
 	
 	var funcs = new Array();
 		
+	// Clear markers
+	$('#map_canvas').gmap('clear', 'markers');
+
+
 	// Add map markers for pois
 	for(var a = 0; a < currentHole.pois.length; a++) {
 		var poi = currentHole.pois[a];
@@ -230,6 +234,17 @@ function loadHole(holeId) {
 		});	
 		
 	}
+	
+	// Center map over hole
+    if(currentHole.pois.length > 0 && currentHole.tees.length > 0) {
+    	var coord = new google.maps.LatLng(intp(currentHole.tees[0].latitude, currentHole.pois[0].latitude), intp(currentHole.tees[0].longitude, currentHole.pois[0].longitude))
+    	$('#map_canvas').gmap('get','map').setOptions({'center':coord});
+
+    }
+}
+
+function intp(a, b) {
+	return (a+b) / 2;
 }
 
 function createVenue(name, description, latitude, longitude) {

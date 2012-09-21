@@ -63,7 +63,7 @@ public class InitDataSingleton {
 		
 		 Locale[] locales = Locale.getAvailableLocales();
 	    for (Locale locale : locales) {
-	      String iso = locale.getISO3Country();
+	      String iso = locale.getCountry();
 	      String code = locale.getCountry();
 	      String name = locale.getDisplayCountry();
 	      if(name.trim().length() > 0) {
