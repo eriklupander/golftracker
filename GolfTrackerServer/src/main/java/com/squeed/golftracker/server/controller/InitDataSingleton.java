@@ -40,6 +40,9 @@ public class InitDataSingleton {
 	
 	TeeType yel;
 	TeeType red;
+	private PoiType bunker;
+	private PoiType water;
+	private PoiType oob;
 	
 	@PostConstruct
 	public void init() {
@@ -94,6 +97,9 @@ public class InitDataSingleton {
 		fg = em.merge(new PoiType(PoiType.FRONT_GREEN));
 		mg = em.merge(new PoiType(PoiType.MID_GREEN));
 		bg = em.merge(new PoiType(PoiType.BACK_GREEN));
+		bunker = em.merge(new PoiType(PoiType.BUNKER));
+		water = em.merge(new PoiType(PoiType.WATER));
+		oob = em.merge(new PoiType(PoiType.OUT_OF_BOUNDS));
 	}
 
 	private User setupUsers() {
@@ -197,9 +203,7 @@ public class InitDataSingleton {
 			h.setHcp(a);
 			h.setNumber(a);
 			h.setPar(4);
-			for(TeeType tt : c.getTees()) {
-				h.getTees().add(new Tee(tt));
-			}
+
 			holes.add(h);
 		}
 		c.setHoles(holes);

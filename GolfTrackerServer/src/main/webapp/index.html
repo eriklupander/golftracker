@@ -21,14 +21,14 @@
 	</style>
 	
 	<script type="text/javascript"
-		src="http://maps.google.com/maps/api/js?sensor=false"></script>
-		<!--  
+		src="script/maps/maps-api.js"></script>
+		  
 	<script type="text/javascript" src="script/jquery/jquery-1.8.1.min.js"></script>
 	<script type="text/javascript" src="script/jquery/jquery.ui.min.js"></script>
-	-->
+	
 
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js" type="text/javascript"></script>
+	<!--  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script> -->
+	<!--  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js" type="text/javascript"></script>  -->
 	<script type="text/javascript" src="script/jquery/jquery.ui.map.full.min.js"></script>
 	<script type="text/javascript" src="rest-js"></script>
 	<script type="text/javascript" src="script/common.js"></script>
@@ -44,14 +44,22 @@
 				<div id="datapanel">
 					<div id="tabs" style="width: 700px;height:700px;">
 						<ul>
-							<li><a href="#tabs-1" id="datapanel_heading"></a></li>						
+							<li><a href="#tabs-1" id="datapanel_heading">No course selected</a></li>						
 						</ul>
 						<div id="tabs-1">
 							<p id="datapanel_description"></p>
 							<hr/>
 							<ol id="datapanel_courses"></ol>
 							<hr/>
-							<div id="datapanel_course"></div>
+							<div id="datapanel_course">
+								<div id="hole_data" style="display:none;">
+									<div id="current_hole" style="font-weight:bold;text-align:right;">---</div>
+									<div style="text-align:right;">
+										Par <input id="current_hole_par" type="text" size="2"/>
+										Index <input id="current_hole_index" type="text" size="2"/>
+									</div>
+								</div>
+							</div>
 							<hr/>
 							<ol id="datapanel_holes"></ol>
 							<hr/>
@@ -78,16 +86,67 @@
 					'draggable': true, 
 					'bounds': false
 				}, function(map, marker) {
-					$('#dialog').append('<form id="dialog'+marker.__gm_id+'" method="get" action="/" style="display:none;">' +
+					if(mode == 'NO_VENUE_SELECTED') {
+						$('#dialog').append('<form id="dialog'+marker.__gm_id+'" method="get" action="/" style="display:none;">' +
 							'<p><label for="name">Name</label><input id="name'+marker.__gm_id+'" class="txt" name="name" value=""/></p>'+
 							'<p><label for="description">Description</label><textarea id="description'+marker.__gm_id+'" class="txt" name="description" cols="40" rows="5"></textarea></p></form>');
-					//findLocation(marker.getPosition(), marker);
+						openCreateVenueDialog(marker);
+					}
+					if(mode == 'HOLE_SELECTED') {
+						$('#dialog').append('<form id="dialog'+marker.__gm_id+'" method="get" action="/" style="display:none;">' +
+								'<p><label for="name">Type</label><select id="poiType'+marker.__gm_id+'"></select></p></form>');
+						
+						for(var a = 0; a < poiTypes.length; a++) {
+							var found = false;
+							// A hole can only have one of each XXXXX_GREEN
+							if(poiTypes[a].name == 'FRONT_GREEN' || poiTypes[a].name == 'MID_GREEN' || poiTypes[a].name == 'BACK_GREEN') {
+								
+								// Make sure the hole doesn't have this one already								
+								for(var b = 0; b < currentHole.pois.length; b++) {
+									if(currentHole.pois[b].type.name == poiTypes[a].name) {
+										found = true;
+										break;
+									}
+								}
+							}
+							if(!found) {
+								$('#poiType'+marker.__gm_id).append('<option value="' + poiTypes[a].id + '">' + poiTypes[a].name + '</option>'); 
+							}							
+						}
+						
+						// Finally, add the Tee Types for this course as well
+						for(var a = 0; a < currentCourse.tees.length; a++) {
+							var found = false;
+							// A hole can only have one of each tee
+								
+								// Make sure the hole doesn't have this one already								
+							for(var b = 0; b < currentHole.tees.length; b++) {
+								if(currentHole.tees[b].teeType.id == currentCourse.tees[a].id) {
+									found = true;
+									break;
+								}
+							}
+							
+							if(!found) {
+								$('#poiType'+marker.__gm_id).append('<option value="' + currentCourse.tees[a].id + '">' + currentCourse.tees[a].name + '</option>'); 
+							}							
+						}						
+						
+						openCreatePoiDialog(marker);
+					}
+
 				}).dragend( function(event) {
 					//findLocation(event.latLng, this);
 					//alert('Dragend');
 					// TODO send new position...
 				}).click( function() {
-					openCreateVenueDialog(this);					
+					/* if(mode == 'NO_VENUE_SELECTED') {
+						openCreateVenueDialog(this);
+					}
+					if(mode == 'HOLE_SELECTED') {
+						openCreatePoiDialog(this);
+					} */
+					
 				})
 			});
 		});

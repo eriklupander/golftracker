@@ -16,6 +16,7 @@ import com.squeed.golftracker.common.model.GolfVenue;
 import com.squeed.golftracker.common.model.Hole;
 import com.squeed.golftracker.common.model.PoiType;
 import com.squeed.golftracker.common.model.PointOfInterest;
+import com.squeed.golftracker.common.model.Tee;
 import com.squeed.golftracker.common.model.TeeType;
 import com.squeed.golftracker.common.model.tiny.TinyGolfVenue;
 
@@ -40,7 +41,7 @@ public interface EditCourseService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	TeeType createTee(@PathParam("courseId") Long courseId, TeeType teeType);
+	TeeType createTeeType(@PathParam("courseId") Long courseId, TeeType teeType);
 	
 	
 	@Path("/hole/{holeId}/update")
@@ -55,6 +56,24 @@ public interface EditCourseService {
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	PointOfInterest createPoi(@PathParam("holeId") Long holeId, PointOfInterest poi);
+	
+	@Path("/poi/save")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	PointOfInterest savePoi(PointOfInterest poi);
+	
+	@Path("/tee/save")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	Tee saveTee(Tee tee);
+	
+	@Path("/hole/{holeId}/createtee")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	Tee createTee(@PathParam("holeId") Long holeId, Tee tee);
 	
 	
 	@Path("/poitypes")

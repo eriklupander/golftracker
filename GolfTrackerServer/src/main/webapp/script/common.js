@@ -1,6 +1,12 @@
+var mode = 'NO_VENUE_SELECTED';
+
 var currentVenue;
 var currentCourse;
 var currentHole;
+
+var poiTypes = new Array();
+
+poiTypes = EditCourseService.getPoiTypes();
 
 //calls the service and handles HTTP error codes
 //will return the value of the request if there is a return value
@@ -134,7 +140,10 @@ function loadCourse(courseId) {
 	$('#datapanel_holes').empty();
 	for(var a = 0; a < currentCourse.holes.length; a++) {
 		var hole = currentCourse.holes[a];
-		$('#datapanel_holes').append('<li id="' + hole.id + '" class="ui-state-default">' + hole.number + '<div style="font-size:10px;">Par ' + hole.par + ' Hcp ' + hole.hcp + '</div></li>');
+		$('#datapanel_holes').append('<li id="' + hole.id + '" class="ui-state-default">' + hole.number + '<div id="details_' + hole.id + '" style="font-size:10px;">Par ' + hole.par + ' Hcp ' + hole.hcp + '</div></li>');
+		$('#edit_hole_' + hole.id).click(function() {
+			alert("Clicked edit");
+		});
 	}
 	$( "#datapanel_holes" ).selectable(
 			{
@@ -162,10 +171,39 @@ function createTeeFunc(i) {
 }
 
 function loadHole(holeId) {
+	mode = 'HOLE_SELECTED';
 	for(var a = 0; a < currentCourse.holes.length; a++) {
 		var hole = currentCourse.holes[a];
 		if(hole.id == holeId) {
 			currentHole = hole;
+			
+			$('#hole_data').css('display','block');
+			$('#current_hole').text('Hole ' + currentHole.number);
+			
+			$('#current_hole_par').val(currentHole.par);
+			$('#current_hole_par').keyup(function() {
+				// Save immediately to backend on key up
+				currentHole.par = $('#current_hole_par').val();
+				var params = {};
+				params.holeId = currentHole.id;
+				params.$entity = currentHole;
+				currentHole = EditCourseService.updateHole(params);
+				$('#details_' + currentHole.id).empty();
+				$('#details_' + currentHole.id).text('Par ' + currentHole.par + ' Hcp ' + currentHole.hcp);
+			});
+			
+			$('#current_hole_index').val(currentHole.hcp);
+			$('#current_hole_index').keyup(function() {
+				// Save immediately to backend on key up
+				currentHole.hcp = $('#current_hole_index').val();
+				var params = {};
+				params.holeId = currentHole.id;
+				params.$entity = currentHole;
+				currentHole = EditCourseService.updateHole(params);
+				$('#details_' + currentHole.id).empty();
+				$('#details_' + currentHole.id).text('Par ' + currentHole.par + ' Hcp ' + currentHole.hcp);
+			});
+		
 			break;
 		}
 	}
@@ -193,6 +231,7 @@ function loadHole(holeId) {
 		
 		var posStr = poi.latitude + ", " + poi.longitude;
 		$('#map_canvas').gmap('addMarker', {
+			'id':poi.id,
 			'position': posStr, 
 			'draggable': true, 
 			'bounds': false,
@@ -201,7 +240,7 @@ function loadHole(holeId) {
 		})		
 		.click(createPoiFunc(id))
 		.dragend( function(event) {
-			alert('Poi dragend');
+			updateAfterDrag(event, this, 'poi');
 		});
 		
 	}
@@ -222,6 +261,7 @@ function loadHole(holeId) {
 		
 		var posStr = tee.latitude + ", " + tee.longitude;
 		$('#map_canvas').gmap('addMarker', {
+			'id':tee.id,
 			'position': posStr, 
 			'draggable': true, 
 			'bounds': false,
@@ -230,7 +270,7 @@ function loadHole(holeId) {
 		})		
 		.click(createTeeFunc(id))
 		.dragend( function(event) {
-			alert('Tee dragend');
+			updateAfterDrag(event, this, 'tee');
 		});	
 		
 	}
@@ -238,9 +278,59 @@ function loadHole(holeId) {
 	// Center map over hole
     if(currentHole.pois.length > 0 && currentHole.tees.length > 0) {
     	var coord = new google.maps.LatLng(intp(currentHole.tees[0].latitude, currentHole.pois[0].latitude), intp(currentHole.tees[0].longitude, currentHole.pois[0].longitude))
-    	$('#map_canvas').gmap('get','map').setOptions({'center':coord});
+    	//$('#map_canvas').gmap('get','map').setOptions({'center':coord});
+    	var map = $('#map_canvas').gmap('get','map');
+    	map.panTo(coord);
 
     }
+}
+
+function updateAfterDrag(event, marker, type) {
+
+	// Send update directly to server
+	var params = {};
+	params.$entity = {
+			'id':marker.id,			 
+			 'longitude':event.latLng.Ya,
+			 'latitude':event.latLng.Xa
+	 };
+	
+	if(type == 'poi') {
+		EditCourseService.savePoi(params);		
+	} else if(type == 'tee') {
+		EditCourseService.saveTee(params);
+	}
+	updateObject(marker.id, type, event.latLng);
+}
+
+/**
+ * Fugly client-side update code.
+ * 
+ * @param id
+ * @param type
+ * @param latLng
+ */
+function updateObject(id, type, latLng) {
+	if(type == 'poi') {
+		// brute force for now
+		for(var a = 0; currentHole.pois.length;a++) {
+			if(currentHole.pois[a].id == id) {
+				currentHole.pois[a].longitude = latLng.Ya;
+				currentHole.pois[a].latitude = latLng.Xa;
+			}
+		}
+		return;
+	}
+	if(type == 'tee') {
+		// brute force for now
+		for(var a = 0; currentHole.tees.length;a++) {
+			if(currentHole.tees[a].id == id) {
+				currentHole.tees[a].longitude = latLng.Ya;
+				currentHole.tees[a].latitude = latLng.Xa;
+			}
+		}
+		return;
+	}
 }
 
 function intp(a, b) {
@@ -256,4 +346,54 @@ function createVenue(name, description, latitude, longitude) {
 			 'latitude':latitude
 	 };
 	 callService("addVenue", venue);
+}
+
+
+function openCreatePoiDialog(marker) {
+	$('#dialog'+marker.__gm_id).dialog({'modal':true, 'title': 'Add point of interest', 'buttons': { 
+		"Remove": function() {
+			$(this).dialog( "close" );
+			marker.setMap(null);
+		},
+		"Save": function() {
+			$(this).dialog( "close" );
+			
+			// Send command to the REST backend.
+			var poiTypeId = $('#poiType'+marker.__gm_id).val();
+			var poiTypeName = $('#poiType'+marker.__gm_id + ' option:selected').text();
+			var isTee = false;
+			// Fugly hack to determine if "poi" is actually a tee....
+			for(var a = 0; a < currentCourse.tees.length; a++) {
+				
+				if(currentCourse.tees[a].name == poiTypeName) {
+					isTee = true;
+				}
+			}
+			
+			var params = {};
+			if(isTee) {
+				params.holeId = currentHole.id;
+				params.$entity = {
+						
+						'teeType': {'id':poiTypeId},
+						'longitude':marker.position.Ya,
+						'latitude':marker.position.Xa
+				 };
+				var dbTee = EditCourseService.createTee(params);
+				currentHole.tees.push(dbTee);
+			} else {
+				params.holeId = currentHole.id;
+				params.$entity = {
+						'title':poiTypeName,
+						'type': {'id':poiTypeId},
+						'longitude':marker.position.Ya,
+						'latitude':marker.position.Xa
+				 };
+				var dbPoi = EditCourseService.createPoi(params);
+				currentHole.pois.push(dbPoi);
+			}
+			
+			
+		}
+	}});
 }

@@ -12,6 +12,9 @@ public class PoiType {
 	public static final String FRONT_GREEN = "FRONT_GREEN";
 	public static final String MID_GREEN = "MID_GREEN";
 	public static final String BACK_GREEN = "BACK_GREEN";
+	public static final String BUNKER = "BUNKER";
+	public static final String WATER = "WATER";
+	public static final String OUT_OF_BOUNDS = "OUT_OF_BOUNDS";
 
 	private Long id;	
 	private String name;
