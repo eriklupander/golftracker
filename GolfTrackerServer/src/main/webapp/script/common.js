@@ -105,6 +105,8 @@ function openEditVenueDialog(marker, venueId) {
 			}
 	);
 	
+	$('#course_info').css('display', 'block');
+	
 	// USE THE CODE BELOW TO POPULATE SOME FORM
 //	$('#dialog').append('<form id="dialog'+marker.__gm_id+'" method="get" action="/" style="display:none;">' +
 //			'<p><label for="name">Name</label><input id="name'+marker.__gm_id+'" class="txt" name="name" value=""/></p>'+

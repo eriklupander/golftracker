@@ -18,6 +18,12 @@
 		#datapanel_holes .ui-selected { background: #F39814; color: white; }
 		#datapanel_holes { list-style-type: none; margin: 0; padding: 0; }
 		#datapanel_holes li { margin: 3px; padding: 1px; float: left; width: 100px; height: 80px; font-size: 3em; text-align: center; }
+		
+		#toolbar {
+			padding: 2px 4px;
+			font-size:0.6em;
+			width:100%;
+		}
 	</style>
 	
 	<script type="text/javascript"
@@ -47,9 +53,20 @@
 							<li><a href="#tabs-1" id="datapanel_heading">No course selected</a></li>						
 						</ul>
 						<div id="tabs-1">
-							<p id="datapanel_description"></p>
-							<hr/>
-							<ol id="datapanel_courses"></ol>
+							<!-- Menu bar, very context sensitive -->
+							<div id="toolbar" class="ui-widget-header ui-corner-all">
+								<button id="add_course">Add Course</button>	
+								<button id="edit_desc">Edit description</button>							
+							</div>
+							<table id="course_info" style="display:none;">
+								<tr>
+									<td valign="top" width="50%">Courses<hr/><ol id="datapanel_courses"></ol></td>
+									<td valign="top" width="50%">Description<hr/><div style="font-size:0.8em;" id="datapanel_description"></div></td>
+								</tr>
+							</table>
+							
+							
+							
 							<hr/>
 							<div id="datapanel_course">
 								<div id="hole_data" style="display:none;">
@@ -60,9 +77,9 @@
 									</div>
 								</div>
 							</div>
-							<hr/>
+							
 							<ol id="datapanel_holes"></ol>
-							<hr/>
+						
 							<div id="datapanel_hole"></div>
 						</div>					
 					</div>
@@ -166,6 +183,35 @@
 				}
 			}});
 		}
+		
+		// Set up toolbar
+		$( "#add_course" ).button({
+			text: true,
+			icons: {
+				primary: "ui-icon-circle-plus"
+			}
+		}).click(function() {
+			openAddCourseToVenueDialog();
+		});
+		$( "#edit_desc" ).button({
+			text: true,
+			icons: {
+				primary: "ui-icon-pencil"
+			}
+		}).click(function() {
+			// Make textarea
+			$('#datapanel_description').empty();
+			var pW = $('#datapanel_description').parent().width();
+			$('#datapanel_description').append('<textarea style="width:' + pW + 'px;" id="venue_description">' + currentVenue.description + '</textarea>');
+			$('#venue_description').blur(function() {
+				// When blurring, save directly to disk and go back to the original look
+				currentVenue.description = $('#venue_description').val();
+				$('#datapanel_description').empty();
+				$('#datapanel_description').text(currentVenue.description);
+				//EditCourseService.updateVenue
+			});
+			$('#venue_description').focus();
+		});
 		
 	</script>
 	

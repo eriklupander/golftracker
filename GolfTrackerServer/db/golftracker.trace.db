@@ -1,0 +1,129 @@
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CLUB" not found; SQL statement:
+alter table club drop constraint FK2EA4B65595C116 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CLUB_SET_CLUB" not found; SQL statement:
+alter table club_set_club drop constraint FK65FD87DC7ABC9FCF [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "CLUB_SET_CLUB" not found; SQL statement:
+alter table club_set_club drop constraint FK65FD87DC45F0311 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "COURSE_HOLE" not found; SQL statement:
+alter table course_hole drop constraint FKFB07A66411A62AE3 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "COURSE_HOLE" not found; SQL statement:
+alter table course_hole drop constraint FKFB07A6648CA251D6 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "COURSE_TEE_TYPE" not found; SQL statement:
+alter table course_tee_type drop constraint FK9C5B4298EE78D6D [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "COURSE_TEE_TYPE" not found; SQL statement:
+alter table course_tee_type drop constraint FK9C5B4298CA251D6 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GAME" not found; SQL statement:
+alter table game drop constraint FK304BF28CA251D6 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GAME_GOLFTRACKER_USER" not found; SQL statement:
+alter table game_golftracker_user drop constraint FKB027C681249E7D76 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GAME_GOLFTRACKER_USER" not found; SQL statement:
+alter table game_golftracker_user drop constraint FKB027C681AD47CF8F [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GOLF_VENUE" not found; SQL statement:
+alter table golf_venue drop constraint FK22BDFC523684E77E [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GOLF_VENUE_COURSE" not found; SQL statement:
+alter table golf_venue_course drop constraint FKFDA1C0A8B11C77D9 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GOLF_VENUE_COURSE" not found; SQL statement:
+alter table golf_venue_course drop constraint FKFDA1C0A8C9C88D19 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GOLFTRACKER_USER" not found; SQL statement:
+alter table golftracker_user drop constraint FKCC278DD4F75A079E [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GOLFTRACKER_USER_GAME" not found; SQL statement:
+alter table golftracker_user_game drop constraint FKBEB6FB7DDF40F82D [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "GOLFTRACKER_USER_GAME" not found; SQL statement:
+alter table golftracker_user_game drop constraint FKBEB6FB7DC6E1F047 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_POI" not found; SQL statement:
+alter table hole_poi drop constraint FKE155764BF3ACE706 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_POI" not found; SQL statement:
+alter table hole_poi drop constraint FKE155764B715B22B6 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_SCORE" not found; SQL statement:
+alter table hole_score drop constraint FKE1F60653715B22B6 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_SCORE_GOLF_SHOT" not found; SQL statement:
+alter table hole_score_golf_shot drop constraint FK66D875CB9DD50CBD [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_SCORE_GOLF_SHOT" not found; SQL statement:
+alter table hole_score_golf_shot drop constraint FK66D875CB1BFE4A57 [42102-161]
+09-22 16:35:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_TEE" not found; SQL statement:
+alter table hole_tee drop constraint FKE1558415715B22B6 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "HOLE_TEE" not found; SQL statement:
+alter table hole_tee drop constraint FKE15584151F9D1613 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "POI" not found; SQL statement:
+alter table poi drop constraint FK1B24AA7DFD8E2 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "POI" not found; SQL statement:
+alter table poi drop constraint FK1B24AEF4D0668 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROUND" not found; SQL statement:
+alter table round drop constraint FK67AB18E8CA251D6 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROUND_USER_ROUND_SCORE" not found; SQL statement:
+alter table round_user_round_score drop constraint FKE759A0BED93E957E [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "ROUND_USER_ROUND_SCORE" not found; SQL statement:
+alter table round_user_round_score drop constraint FKE759A0BE54C6B716 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "TEE" not found; SQL statement:
+alter table tee drop constraint FK1C014DDBAE09E [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "USER_ROUND_SCORE" not found; SQL statement:
+alter table user_round_score drop constraint FK9547622DDDBAE09E [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "USER_ROUND_SCORE" not found; SQL statement:
+alter table user_round_score drop constraint FK9547622D2788C2D6 [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "USER_ROUND_SCORE_HOLE_SCORE" not found; SQL statement:
+alter table user_round_score_hole_score drop constraint FKA6B5CBA53453676F [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Table "USER_ROUND_SCORE_HOLE_SCORE" not found; SQL statement:
+alter table user_round_score_hole_score drop constraint FKA6B5CBA5B482E60D [42102-161]
+09-22 16:35:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Sequence "HIBERNATE_SEQUENCE" not found; SQL statement:
+drop sequence hibernate_sequence [90036-161]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:169)
+	at org.h2.message.DbException.get(DbException.java:146)
+	at org.h2.command.ddl.DropSequence.update(DropSequence.java:45)
+	at org.h2.command.CommandContainer.update(CommandContainer.java:73)
+	at org.h2.command.Command.executeUpdate(Command.java:219)
+	at org.h2.jdbc.JdbcStatement.executeUpdateInternal(JdbcStatement.java:125)
+	at org.h2.jdbc.JdbcStatement.executeUpdate(JdbcStatement.java:110)
+	at org.jboss.jca.adapters.jdbc.WrappedStatement.executeUpdate(WrappedStatement.java:371)
+	at org.hibernate.tool.hbm2ddl.DatabaseExporter.export(DatabaseExporter.java:64)
+	at org.hibernate.tool.hbm2ddl.SchemaExport.perform(SchemaExport.java:419)
+	at org.hibernate.tool.hbm2ddl.SchemaExport.execute(SchemaExport.java:373)
+	at org.hibernate.tool.hbm2ddl.SchemaExport.create(SchemaExport.java:305)
+	at org.hibernate.tool.hbm2ddl.SchemaExport.create(SchemaExport.java:294)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:452)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1737)
+	at org.hibernate.ejb.EntityManagerFactoryImpl.<init>(EntityManagerFactoryImpl.java:84)
+	at org.hibernate.ejb.Ejb3Configuration.buildEntityManagerFactory(Ejb3Configuration.java:904)
+	at org.hibernate.ejb.Ejb3Configuration.buildEntityManagerFactory(Ejb3Configuration.java:889)
+	at org.hibernate.ejb.HibernatePersistence.createContainerEntityManagerFactory(HibernatePersistence.java:73)
+	at org.jboss.as.jpa.service.PersistenceUnitServiceImpl.createContainerEntityManagerFactory(PersistenceUnitServiceImpl.java:162)
+	at org.jboss.as.jpa.service.PersistenceUnitServiceImpl.start(PersistenceUnitServiceImpl.java:85)
+	at org.jboss.msc.service.ServiceControllerImpl$StartTask.startService(ServiceControllerImpl.java:1811)
+	at org.jboss.msc.service.ServiceControllerImpl$StartTask.run(ServiceControllerImpl.java:1746)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.runTask(ThreadPoolExecutor.java:886)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:908)
+	at java.lang.Thread.run(Thread.java:662)
