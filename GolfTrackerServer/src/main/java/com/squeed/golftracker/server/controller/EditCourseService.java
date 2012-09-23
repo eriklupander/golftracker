@@ -3,6 +3,7 @@ package com.squeed.golftracker.server.controller;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -29,12 +30,34 @@ public interface EditCourseService {
 	@Produces(MediaType.APPLICATION_JSON)
 	GolfVenue addVenue(GolfVenue venue);
 	
+	/**
+	 * Updates name and/or description only!
+	 * 
+	 * @param venueId
+	 * @param venue
+	 * @return
+	 */
+	@Path("/venue/{venueId}/update")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	GolfVenue updateVenue(@PathParam("venueId") Long venueId, GolfVenue venue);
 	
 	@Path("/venue/{venueId}/course/create")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	Course addCourseToVenue(@PathParam("venueId") Long venueId, Course course) throws Exception;
+	
+	@Path("/course/{courseId}/update")
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	Course updateCourse(@PathParam("courseId") Long courseId, Course course) throws Exception;
+	
+	@Path("/venue/{venueId}/course/{courseId}/delete")
+    @DELETE   
+	void deleteCourse(@PathParam("venueId") Long venueId, @PathParam("courseId") Long courseId) throws Exception;
 	
 	
 	@Path("/course/{courseId}/createtee")

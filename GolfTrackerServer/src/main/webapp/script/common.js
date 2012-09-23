@@ -81,6 +81,11 @@ function loadVenues() {
 	}
 }
 
+/**
+ * When clicking a GolfVenue (golf club) marker
+ * @param marker
+ * @param venueId
+ */
 function openEditVenueDialog(marker, venueId) {
 	var params = {};
 	params.id = venueId;
@@ -104,6 +109,14 @@ function openEditVenueDialog(marker, venueId) {
 				}
 			}
 	);
+	
+	$('#toolbar').css('display', 'block');
+	// Enable some buttons
+	$('#edit_course').button('disable');
+	$('#delete_course').button('disable');
+	
+	// Clear holes panel
+	$('#datapanel_holes').empty();
 	
 	$('#course_info').css('display', 'block');
 	
@@ -137,6 +150,10 @@ function loadCourse(courseId) {
 			break;
 		}
 	}
+	
+	// Enable some buttons
+	$('#edit_course').button('enable');
+	$('#delete_course').button('enable');
 	
 	// Add form data and holes etc.
 	$('#datapanel_holes').empty();
@@ -396,6 +413,170 @@ function openCreatePoiDialog(marker) {
 			}
 			
 			
+		}
+	}});
+	
+}
+
+function openEditCourseDialog() {
+	if(currentVenue == undefined || currentVenue == null) {
+		alert('No golf club selected!');
+		return;
+	}
+	
+	$('#dialog').append('<form id="edit_course_dialog" method="get" action="/">' +
+			'<p><label for="name">Name</label><input type="text" id="edit_course_name" value="' + currentCourse.name + '"></input></p>'+
+			'<p><label for="name">Description</label><textarea id="edit_course_desc">' + currentCourse.description + '</textarea></p>' +
+			// Tee form
+			'<div id="tees"><label for="name">Tees</label><br/>' +
+			// Tees goes here
+			'</div>' +
+			'</form>');
+	
+	// Note that we use the ID, not the index here
+	if(currentCourse.tees.length > 0) {
+		for(var a = 0; a < currentCourse.tees.length; a++) {
+			$('#tees').append('<div id="edit_tee_div_' + (a+1) + '">Tee ' + (a+1) + ': <input type="text" id="existing_tee_' + currentCourse.tees[a].id + '" value="' + currentCourse.tees[a].name + '"/></div>')
+		}
+	} else {
+		$('#tees').append('<div id="add_tee_div_1">Tee 1: <input type="text" id="add_tee_1"/></div>');
+	}
+		
+	$('#edit_course_dialog').dialog({'modal':true, 'title': 'Edit course', 'buttons': { 
+		"Add tee": function() {
+			var existingCount = ($('#tees input').length) + 1;
+			if(existingCount < 8) {
+				$('#tees').append('<div id="edit_tee_div_' + existingCount + '">Tee ' + existingCount + ': <input type="text" id="add_tee_' + existingCount + '"/></div>');
+			} else {
+				alert('Cannot have more than ' + 7 + ' tees on a course.');
+			}
+		},
+		"Remove tee": function() {			
+			var existingCount = ($('#tees input').length);
+			if(existingCount > 1) {
+				$('#edit_tee_div_' + existingCount).remove();
+			} else {
+				alert('A course must have at least one tee');
+			}
+		},
+		"Remove": function() {
+			$(this).dialog( "close" );			
+		},
+		"Save": function() {
+			$(this).dialog( "close" );
+			var course = {
+				'name' : $('#edit_course_name').val(),
+				'description' : $('#edit_course_desc').val()
+			};
+			
+			// Get all inputs for tees. If id starts 'existing_tee_' we have updated an existing one. If it starts with add_tee_, it's a new ones. As for deleted ones, we must do some kind of diff server-side
+			var teeCount = ($('#tees input').length);
+			course.tees = new Array();
+			for(var a = 1; a <= teeCount; a++) {
+				var inputElement = $('#tees input')[a-1];
+				var elemId = $(inputElement).attr('id');
+				if(elemId.substring(0,4) == 'add_') {
+					// NEW
+					var teeType = {};
+					teeType.name =  $(inputElement).val();
+					if(teeType.name == undefined || teeType.name == '') {
+						alert('Please enter a name for each tee.');
+						return;
+					}
+					course.tees.push(teeType);
+				} else if(elemId.substring(0,9) == 'existing_') {
+					// UPDATED
+					// Find the existing one using the ID in the currentCourse.tees... (fugly)
+							
+					var teeType = {};
+					teeType.id = elemId.substring(13);
+					teeType.name = $(inputElement).val();
+					if(teeType.name == undefined || teeType.name == '') {
+						alert('Please enter a name for each tee.');
+						return;
+					}
+					course.tees.push(teeType);
+				}
+			}
+			
+			var params = {};
+			params.courseId = currentCourse.id;
+			params.$entity = course;
+			EditCourseService.updateCourse(params);
+		}
+	}});
+}
+	
+function openAddCourseToVenueDialog() {
+	if(currentVenue == undefined || currentVenue == null) {
+		alert('No golf club selected!');
+		return;
+	}
+	
+	$('#dialog').append('<form id="add_course_dialog">' +
+			'<p><label for="name">Name</label><input type="text" id="course_name"></input></p>'+
+			'<p><label for="name">Number of holes</label><select id="course_no_holes"></select></p>' +
+			'<p><label for="name">Description</label><textarea id="course_desc"></textarea></p><hr/>' +
+			// Tee form
+			'<div id="tees"><label for="name">Tees</label><br/>' +
+			'<div id="add_tee_div_1">Tee 1: <input type="text" id="add_tee_1"/></div>' +
+			'<div id="add_tee_div_2">Tee 2: <input type="text" id="add_tee_2"/></div>' +
+			'</div>' +
+			'</form>');
+	
+	for(var a = 18; a > 0; a--) {
+		$('#course_no_holes').append('<option value="' + a + '">' + a + '</option>');
+	}
+	
+	$('#add_course_dialog').dialog({'modal':true, 'title': 'Add course to this golf club', 'buttons': { 
+		"Add tee": function() {
+			var existingCount = ($('#tees input').length) + 1;
+			if(existingCount < 8) {
+				$('#tees').append('<div id="add_tee_div_' + existingCount + '">Tee ' + existingCount + ': <input type="text" id="add_tee_' + existingCount + '"/></div>');
+			} else {
+				alert('Cannot have more than ' + 7 + ' tees on a course.');
+			}
+		},
+		"Remove tee": function() {			
+			var existingCount = ($('#tees input').length);
+			if(existingCount > 1) {
+				$('#add_tee_div_' + existingCount).remove();
+			} else {
+				alert('A course must have at least one tee');
+			}
+		},
+		"Remove": function() {
+			$(this).dialog( "close" );			
+		},
+		"Save": function() {
+			
+			var course = {
+				'name' : $('#course_name').val(),
+				'description' : $('#course_desc').val(),
+				'holeCount' : $('#course_no_holes  option:selected').val()
+			};
+			
+			// Add (and validate tees)
+			var teeCount = ($('#tees input').length);
+			course.tees = new Array();
+			for(var a = 1; a <= teeCount; a++) {
+				var teeType = {};
+				teeType.name = $('#add_tee_' + a).val();
+				
+				if(teeType.name == undefined || teeType.name == '') {
+					alert('Please enter a name for each tee.');
+					return;
+				}
+				
+				course.tees.push(teeType);
+			}
+			
+			$(this).dialog( "close" );
+			
+			var params = {};
+			params.venueId = currentVenue.id;
+			params.$entity = course;
+			currentVenue.courses.push(EditCourseService.addCourseToVenue(params));
 		}
 	}});
 }

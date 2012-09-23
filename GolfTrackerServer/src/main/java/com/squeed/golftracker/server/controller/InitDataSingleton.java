@@ -156,20 +156,16 @@ public class InitDataSingleton {
 		gv.setLongitude(11.378657);
 		gv.setLatitude(58.436222);
 		
-		Course c = new Course();		
-		c.setName("Gul/Röd");
-		c.setDescription("5480 meters, mixed park/forest");
-		
-		Course c2 = new Course();		
-		c2.setName("Blå");
-		c2.setDescription("2680 meters, mixed park/forest");
-		
-		addTeeTypes(c);
-		addTeeTypes(c2);
-		addHoles(c, 18, user);
-		addHoles(c2, 9, user);
-		gv.getCourses().add(c);
-		gv.getCourses().add(c2);
+//		Course c = new Course();		
+//		c.setName("Gul/Röd");
+//		c.setDescription("5480 meters, mixed park/forest");
+//		
+//		addTeeTypes(c);
+//		
+//		addHoles(c, 18, user);
+//	
+//		gv.getCourses().add(c);
+	
 		em.merge(gv);
 	}
 
@@ -178,31 +174,31 @@ public class InitDataSingleton {
 		// Let's hard-code a few holes
 		
 		
-		Hole h1 = new Hole(1, 7, 4);
-		h1.getTees().add(new Tee(yel, 11.380046, 58.435646));
-		h1.getTees().add(new Tee(red, 11.379507, 58.435499));
-		h1.getPois().add(new PointOfInterest(fg, "Framkant green", 11.376318, 58.433425, user));
-		h1.getPois().add(new PointOfInterest(mg, "Mitten green", 11.376281, 58.433306, user));
-		h1.getPois().add(new PointOfInterest(bg, "Bakkant green", 11.376262, 58.433244, user));
-		
-		
-		Hole h2 = new Hole(2, 13, 3);
-		h2.getTees().add(new Tee(yel, 11.377222, 58.432922));
-		h2.getTees().add(new Tee(red, 11.376911, 58.43295));
-		h2.getPois().add(new PointOfInterest(fg, "Framkant green", 11.375076, 58.432729, user));
-		h2.getPois().add(new PointOfInterest(mg, "Mitten green", 11.374775, 58.432703, user));
-		h2.getPois().add(new PointOfInterest(bg, "Bakkant green", 11.374497, 58.432647, user));
-		
+//		Hole h1 = new Hole(1, 7, 4);
+//		h1.getTees().add(new Tee(yel, 11.380046, 58.435646));
+//		h1.getTees().add(new Tee(red, 11.379507, 58.435499));
+//		h1.getPois().add(new PointOfInterest(fg, "Framkant green", 11.376318, 58.433425, user));
+//		h1.getPois().add(new PointOfInterest(mg, "Mitten green", 11.376281, 58.433306, user));
+//		h1.getPois().add(new PointOfInterest(bg, "Bakkant green", 11.376262, 58.433244, user));
+//		
+//		
+//		Hole h2 = new Hole(2, 13, 3);
+//		h2.getTees().add(new Tee(yel, 11.377222, 58.432922));
+//		h2.getTees().add(new Tee(red, 11.376911, 58.43295));
+//		h2.getPois().add(new PointOfInterest(fg, "Framkant green", 11.375076, 58.432729, user));
+//		h2.getPois().add(new PointOfInterest(mg, "Mitten green", 11.374775, 58.432703, user));
+//		h2.getPois().add(new PointOfInterest(bg, "Bakkant green", 11.374497, 58.432647, user));
+//		
 	
 		
-		holes.add(h1);
-		holes.add(h2);
+//		holes.add(h1);
+//		holes.add(h2);
 		
-		for(int a = 3 ; a < numOfHoles-1; a++) {
+		for(int a = 1 ; a <= numOfHoles; a++) {
 			Hole h = new Hole();
-			h.setHcp(a);
+			//h.setHcp(a);
 			h.setNumber(a);
-			h.setPar(4);
+			//h.setPar(4);
 
 			holes.add(h);
 		}

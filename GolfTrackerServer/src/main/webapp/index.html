@@ -54,8 +54,10 @@
 						</ul>
 						<div id="tabs-1">
 							<!-- Menu bar, very context sensitive -->
-							<div id="toolbar" class="ui-widget-header ui-corner-all">
-								<button id="add_course">Add Course</button>	
+							<div style="display:none;" id="toolbar" class="ui-widget-header ui-corner-all">
+								<button id="add_course">Add Course</button>
+								<button id="edit_course">Edit Course</button>	
+								<button id="delete_course">Delete Course</button>	
 								<button id="edit_desc">Edit description</button>							
 							</div>
 							<table id="course_info" style="display:none;">
@@ -89,6 +91,10 @@
 	</table>
 	
 	<div id="dialog"></div>
+	
+	<div id="dialog-confirm" title="Confirm deletion">
+		<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>The item will be permanently deleted and cannot be recovered. Are you sure?</p>
+	</div>
 		
 	<script type="text/javascript"> 
 	
@@ -193,6 +199,41 @@
 		}).click(function() {
 			openAddCourseToVenueDialog();
 		});
+		$( "#edit_course" ).button({
+			text: true,
+			disabled : true,
+			icons: {
+				primary: "ui-icon-pencil"
+			}
+		}).click(function() {
+			openEditCourseDialog();
+		});
+		$( "#delete_course" ).button({
+			text: true,
+			disabled : true,
+			icons: {
+				primary: "ui-icon-circle-minus"
+			}
+		}).click(function() {
+			$( "#dialog-confirm" ).dialog({
+				resizable: false,
+				height:140,
+				modal: true,
+				buttons: {
+					"Delete item": function() {
+						$( this ).dialog( "close" );
+						// TODO validate so we have a proper selected venue and course
+						var params = {};
+						params.venueId = currentVenue.id;
+						params.courseId = currentCourse.id;
+						EditCourseService.deleteCourse(params);
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 		$( "#edit_desc" ).button({
 			text: true,
 			icons: {
@@ -208,7 +249,12 @@
 				currentVenue.description = $('#venue_description').val();
 				$('#datapanel_description').empty();
 				$('#datapanel_description').text(currentVenue.description);
-				//EditCourseService.updateVenue
+				
+				// Send save 
+				var params = {};
+				params.venueId = currentVenue.id;
+				params.$entity = currentVenue;
+				currentVenue = EditCourseService.updateVenue(params);
 			});
 			$('#venue_description').focus();
 		});

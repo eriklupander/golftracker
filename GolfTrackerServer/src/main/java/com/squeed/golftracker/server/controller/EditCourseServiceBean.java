@@ -1,6 +1,7 @@
 package com.squeed.golftracker.server.controller;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -31,6 +32,14 @@ public class EditCourseServiceBean implements EditCourseService {
 		//log.info("Creating new GolfVenue: " + venue.getName());
 		return em.merge(venue);
 	}
+	
+	@Override
+	public GolfVenue updateVenue(Long venueId, GolfVenue venue) {
+		GolfVenue dbVenue = em.find(GolfVenue.class, venueId);
+		dbVenue.setName(venue.getName());
+		dbVenue.setDescription(venue.getDescription());
+		return em.merge(dbVenue);
+	}
 
 	@Override
 	public Course addCourseToVenue(Long venueId, Course course) throws Exception {
@@ -49,6 +58,59 @@ public class EditCourseServiceBean implements EditCourseService {
 		venue = em.merge(venue);
 		return course;
 	}
+	
+	@Override
+	public Course updateCourse(Long courseId, Course course) throws Exception {
+		Course dbCourse = em.find(Course.class, courseId);
+		dbCourse.setName(course.getName());
+		dbCourse.setDescription(course.getDescription());
+		
+		// Tricky part, add/update/remove TeeTypes
+		for(TeeType tt : course.getTees()) {
+			if(tt.getId() == null) {
+				// NEW, add and persist
+				dbCourse.getTees().add(tt);
+			} else {
+				// UPDATE
+				TeeType dbTeeType = em.find(TeeType.class, tt.getId());
+				dbTeeType.setName(tt.getName());
+				em.merge(dbTeeType);
+			}
+		}
+		
+		// Loop over dbCourse tees. If not present in course tees, remove
+		Iterator<TeeType> i = dbCourse.getTees().iterator();
+		while(i.hasNext()) {
+			TeeType dbTt = i.next();
+			if(!course.getTees().contains(dbTt)) {
+				em.remove(dbTt);
+				i.remove();
+			}
+		}
+		
+		return em.merge(dbCourse);
+	}
+	
+	@Override
+	public void deleteCourse(Long venueId, Long courseId) throws Exception {
+		GolfVenue gv = em.find(GolfVenue.class, venueId);
+		Course dbCourse = em.find(Course.class, courseId);
+		
+		gv.getCourses().remove(dbCourse);
+		gv = em.merge(gv);
+
+		// Delete tees, pois etc.
+//		for(Hole h : dbCourse.getHoles()) {
+//			em.remove(h);
+//		}
+//		
+//		// Delete tee types for the course last (hole -> tee -> teeType)
+//		for(TeeType tt : dbCourse.getTees()) {
+//			em.remove(tt);
+//		}
+//		em.remove(dbCourse);
+	}
+
 
 	@Override
 	public TeeType createTeeType(Long courseId, TeeType teeType) {
@@ -120,10 +182,4 @@ public class EditCourseServiceBean implements EditCourseService {
 		
 		return l;
 	}
-
-	
-	
-	
-
-	
 }
