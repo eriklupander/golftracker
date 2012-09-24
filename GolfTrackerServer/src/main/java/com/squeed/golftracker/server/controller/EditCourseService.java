@@ -80,11 +80,11 @@ public interface EditCourseService {
 	@Produces(MediaType.APPLICATION_JSON)
 	PointOfInterest createPoi(@PathParam("holeId") Long holeId, PointOfInterest poi);
 	
-	@Path("/poi/save")
+	@Path("/poi/update")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	PointOfInterest savePoi(PointOfInterest poi);
+	PointOfInterest updatePoi(PointOfInterest poi);
 	
 	@Path("/tee/save")
     @PUT

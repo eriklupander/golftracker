@@ -32,6 +32,16 @@ function callService(method, parameters) {
 	return returnValue;
 }
 
+/**
+ * If the supplied str is null or undefined, return the subst value instead
+ */
+function nullSafeStr(str, subst) {
+	if(str == null || str == undefined) {
+		return subst;
+	}
+	return str;
+}
+
 //Strips any html elements within a string
 //inspired from http://stackoverflow.com/questions/822452/strip-html-from-text-javascript:
 function stripHtml(htmlString) {
@@ -175,18 +185,136 @@ function loadCourse(courseId) {
 	);
 }
 
-function test(marker, id) {
-	alert(id);
+function openEditPoiDialog(marker, id) {
+	var currentPoi;
+	for(var a = 0; a < currentHole.pois.length; a++) {
+		if(currentHole.pois[a].id == id) {
+			currentPoi = currentHole.pois[a];
+			break;
+		}
+	}
+	if(currentPoi == null || currentPoi == undefined) {
+		alert('ERROR, could not find POI.');
+		return;
+	}
+	//alert('Edit: ' + id + ' Marker: ' + marker);
+	$('#dialog').append('<form id="edit_poi_dialog">' +
+	'<p><label for="name">Name</label><input type="text" id="poi_title_'+id+'" value="' + currentPoi.title + '"></input></p>'+
+	'<p><label for="name">Type</label><select id="poiType_'+id+'"></select></p></form>');
+	
+	for(var a = 0; a < poiTypes.length; a++) {
+		var found = false;
+		// A hole can only have one of each XXXXX_GREEN
+		// But since this is the edit mode, we must support our own if selected
+		if(poiTypes[a].name == 'FRONT_GREEN' || poiTypes[a].name == 'MID_GREEN' || poiTypes[a].name == 'BACK_GREEN') {
+			
+			// Make sure the hole doesn't have this one already								
+			for(var b = 0; b < currentHole.pois.length; b++) {
+				if(currentHole.pois[b].type.name == poiTypes[a].name && currentHole.pois[b].id != currentPoi.id) {
+					found = true;
+					break;
+				}
+			}
+		}
+		if(!found) {
+			var isSelected = (poiTypes[a].id == currentPoi.type.id);
+			$('#poiType_'+id).append('<option ' + (isSelected ? 'selected' : '') + ' value="' + poiTypes[a].id + '">' + poiTypes[a].name + '</option>');
+		}							
+	}
+	
+	// Finally, add the Tee Types for this course as well
+	for(var a = 0; a < currentCourse.tees.length; a++) {
+		var found = false;
+		// A hole can only have one of each tee
+			
+			// Make sure the hole doesn't have this one already								
+		for(var b = 0; b < currentHole.tees.length; b++) {
+			if(currentHole.tees[b].teeType.id == currentCourse.tees[a].id) {
+				found = true;
+				break;
+			}
+		}
+		
+		if(!found) {
+			$('#poiType_'+id).append('<option value="' + currentCourse.tees[a].id + '">' + currentCourse.tees[a].name + '</option>'); 
+		}							
+	}
+	
+	doOpenTheDialog(marker, id);
+
+}
+
+function doOpenTheDialog(marker, id) {
+	$('#edit_poi_dialog').dialog({'modal':true, 'title': 'Edit point of interest', 'buttons': { 
+		"Remove": function() {
+			$(this).dialog( "close" );
+			marker.setMap(null);
+		},
+		"Save": function() {
+			$(this).dialog( "close" );
+			params.$entity = {
+			    'id' : id,
+				'title':$('#poi_title_' + id).val(),
+				'type': {'id':$('#poiType_' + id).val()},
+				'longitude':currentPoi.longitude,
+				'latitude':currentPoi.latitude
+			};
+			var dbPoi = EditCourseService.updatePoi(params);
+			
+			// TODO Update client-side POI
+			for(var a = 0; currentHole.pois.length;a++) {
+				if(currentHole.pois[a].id == id) {
+					currentHole.pois[a] = dbPoi;
+				}
+			}
+		}	
+			// Send command to the REST backend.
+//			var poiTypeId = $('#poiType'+marker.__gm_id).val();
+//			var poiTypeName = $('#poiType'+marker.__gm_id + ' option:selected').text();
+//			var isTee = false;
+//			// Fugly hack to determine if "poi" is actually a tee....
+//			for(var a = 0; a < currentCourse.tees.length; a++) {
+//				
+//				if(currentCourse.tees[a].name == poiTypeName) {
+//					isTee = true;
+//				}
+//			}
+//			
+//			var params = {};
+//			if(isTee) {
+//				params.holeId = currentHole.id;
+//				params.$entity = {
+//						
+//						'teeType': {'id':poiTypeId},
+//						'longitude':marker.position.Ya,
+//						'latitude':marker.position.Xa
+//				 };
+//				var dbTee = EditCourseService.createTee(params);
+//				currentHole.tees.push(dbTee);
+//			} else {
+//				params.holeId = currentHole.id;
+//				params.$entity = {
+//						'title':poiTypeName,
+//						'type': {'id':poiTypeId},
+//						'longitude':marker.position.Ya,
+//						'latitude':marker.position.Xa
+//				 };
+//				var dbPoi = EditCourseService.createPoi(params);
+//				currentHole.pois.push(dbPoi);
+//			}
+//			
+//			
+//		}
+	}});
+	
 }
 
 function createPoiFunc(i) {
-    //return function() { return openEditVenueDialog(this, i); };
-	return function() { return test(this, i) };
+	return function() { return openEditPoiDialog(this, i) };
 }
 
 function createTeeFunc(i) {
-    //return function() { return openEditVenueDialog(this, i); };
-	return function() { return test(this, i) };
+	return function() { return openEditPoiDialog(this, i) };
 }
 
 function loadHole(holeId) {
@@ -208,7 +336,7 @@ function loadHole(holeId) {
 				params.$entity = currentHole;
 				currentHole = EditCourseService.updateHole(params);
 				$('#details_' + currentHole.id).empty();
-				$('#details_' + currentHole.id).text('Par ' + currentHole.par + ' Hcp ' + currentHole.hcp);
+				$('#details_' + currentHole.id).text('Par ' + nullSafeStr(currentHole.par, '-') + ' Hcp ' + nullSafeStr(currentHole.hcp, '--'));
 			});
 			
 			$('#current_hole_index').val(currentHole.hcp);
@@ -220,14 +348,12 @@ function loadHole(holeId) {
 				params.$entity = currentHole;
 				currentHole = EditCourseService.updateHole(params);
 				$('#details_' + currentHole.id).empty();
-				$('#details_' + currentHole.id).text('Par ' + currentHole.par + ' Hcp ' + currentHole.hcp);
+				$('#details_' + currentHole.id).text('Par ' + nullSafeStr(currentHole.par, '-') + ' Hcp ' + nullSafeStr(currentHole.hcp, '--'));
 			});
 		
 			break;
 		}
 	}
-	
-	//$('#map_canvas').clear(name:'markers');
 	
 	
 	var funcs = new Array();
@@ -248,6 +374,8 @@ function loadHole(holeId) {
 		
 		var id = funcs[a]();
 		
+		var iconStr = getIconStr(poi.poiType);
+		
 		var posStr = poi.latitude + ", " + poi.longitude;
 		$('#map_canvas').gmap('addMarker', {
 			'id':poi.id,
@@ -255,7 +383,7 @@ function loadHole(holeId) {
 			'draggable': true, 
 			'bounds': false,
 			'title' : poi.title,
-			'icon': 'images/poi.png'
+			'icon': iconStr //'images/poi.png'
 		})		
 		.click(createPoiFunc(id))
 		.dragend( function(event) {
@@ -294,16 +422,35 @@ function loadHole(holeId) {
 		
 	}
 	
-	// Center map over hole
+	// Center map over hole using the panTo function
     if(currentHole.pois.length > 0 && currentHole.tees.length > 0) {
-    	var coord = new google.maps.LatLng(intp(currentHole.tees[0].latitude, currentHole.pois[0].latitude), intp(currentHole.tees[0].longitude, currentHole.pois[0].longitude))
-    	//$('#map_canvas').gmap('get','map').setOptions({'center':coord});
+    	var coord = new google.maps.LatLng(intp(currentHole.tees[0].latitude, currentHole.pois[0].latitude), intp(currentHole.tees[0].longitude, currentHole.pois[0].longitude));
     	var map = $('#map_canvas').gmap('get','map');
     	map.panTo(coord);
-
     }
 }
 
+/**
+ * Returns a proper URL string for the marker image depending on POI type.
+ */
+function getIconStr(poiType) {
+	switch(poiType) {
+		case 'FRONT_GREEN':
+		case 'MID_GREEN':
+		case 'BACK_GREEN':
+			return 'images/poi.png';
+		case 'BUNKER':
+			return 'images/poi.png';
+		case 'WATER':
+			return 'images/poi.png';
+		default:
+			return 'images/poi.png';
+	}
+}
+
+/**
+ * 
+ */
 function updateAfterDrag(event, marker, type) {
 
 	// Send update directly to server
@@ -315,7 +462,7 @@ function updateAfterDrag(event, marker, type) {
 	 };
 	
 	if(type == 'poi') {
-		EditCourseService.savePoi(params);		
+		EditCourseService.updatePoi(params);		
 	} else if(type == 'tee') {
 		EditCourseService.saveTee(params);
 	}
@@ -366,6 +513,10 @@ function createVenue(name, description, latitude, longitude) {
 	 };
 	 callService("addVenue", venue);
 }
+
+
+
+
 
 
 function openCreatePoiDialog(marker) {

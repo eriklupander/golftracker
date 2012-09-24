@@ -138,10 +138,17 @@ public class EditCourseServiceBean implements EditCourseService {
 	}
 	
 	@Override
-	public PointOfInterest savePoi(PointOfInterest poi) {
+	public PointOfInterest updatePoi(PointOfInterest poi) {
 		PointOfInterest dbPoi = em.find(PointOfInterest.class, poi.getId());
 		dbPoi.setLatitude(poi.getLatitude());
 		dbPoi.setLongitude(poi.getLongitude());
+		if(poi.getTitle() != null && poi.getTitle().trim().length() > 0) {
+			dbPoi.setTitle(poi.getTitle());
+		}
+		if(poi.getType() != null) {
+			dbPoi.setType(poi.getType());
+		}
+		
 		return em.merge(dbPoi);
 	}
 	
